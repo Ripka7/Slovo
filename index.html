@@ -1,0 +1,1507 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<title>Слово за словом</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Слово за словом">
+<meta name="theme-color" content="#EEF1F5">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=1">
+<link rel="icon" type="image/png" href="icon-512.png">
+<meta name="robots" content="noindex">
+</head><body>
+<style>
+/* Layout: macOS-style translucent sidebar + white rounded content window on desktop; iOS large-title screens + floating glass tab bar on phones. Light, blue-grey, single theme by choice. */
+:root{
+  color-scheme:light;
+  --bg:#EEF1F5; --side:#E3E8EF; --surface:#F5F7FA; --card:#FFFFFF; --card-2:#EEF2F6; --fill:#E6EBF1;
+  --text:#1C1C1E; --muted:#6A7586; --muted-2:#97A1AF; --line:#DCE2EA; --hair:rgba(60,84,120,.13);
+  --accent:#007AFF; --accent-press:#0063D1; --accent-soft:#E2EEFC; --accent-ink:#0A4FA3;
+  --slate:#5D7189; --slate-soft:#E5ECF4;
+  --hero:#E3EBF5; --hero-2:#D2DDEA; --ring-bg:#D0DBE8;
+  --good:#1F8A3E; --good-soft:#E2F4E7; --bad:#D70015; --bad-soft:#FCE6E8; --warn:#B85000; --warn-soft:#FFEFDC;
+  --c1:#007AFF; --c2:#BCD5F4; --c3:#5D7189; --c4:#0A4FA3; --c5:#E6EBF1; --grid:#E5EAF0; --heat-0:#E5EAF0;
+  --h1:#CFE0F7; --h2:#89B6EE; --h3:#3A8DF5; --h4:#0A4FA3;
+  --scrim:rgba(30,40,55,.32); --glass:rgba(255,255,255,.78); --focus:rgba(0,122,255,.45);
+  --f:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --f-d:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --f-r:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.47 var(--f);-webkit-font-smoothing:antialiased;letter-spacing:-.005em;overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.ic{flex:none;display:block}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* shell */
+.app{height:100%;display:grid;grid-template-columns:244px minmax(0,1fr);background:var(--side)}
+.side{background:var(--side);color:var(--text);display:flex;flex-direction:column;gap:18px;padding:22px 12px 16px;overflow-y:auto}
+.logo{display:flex;align-items:center;gap:10px;padding:0 8px;font:600 15px/1.2 var(--f-d);letter-spacing:-.01em}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:var(--accent);color:#fff;display:grid;place-items:center;font:700 15px var(--f-r)}
+.logo small{display:block;font:400 12px var(--f);color:var(--muted)}
+.add-big{display:flex;align-items:center;justify-content:center;gap:8px;height:42px;border:0;border-radius:11px;background:var(--accent);color:#fff;font:600 14.5px var(--f)}
+.add-big:hover{background:var(--accent-press)}
+.add-big kbd{font:500 11px var(--f);background:rgba(255,255,255,.22);border-radius:5px;padding:1px 6px}
+.nav{display:flex;flex-direction:column;gap:1px}
+.nav button{display:flex;align-items:center;gap:10px;height:36px;padding:0 10px;border:0;border-radius:8px;background:none;color:var(--text);font:500 14px var(--f);text-align:left}
+.nav button .ic{color:var(--accent)}
+.nav button:hover{background:rgba(60,84,120,.07)}
+.nav button[aria-current="page"]{background:rgba(60,84,120,.13)}
+.nav .badge{margin-left:auto;font:600 12px var(--f-r);color:var(--muted);padding:0 4px}
+.nav .k{margin-left:auto;font-size:11px;color:var(--muted-2)}
+.nav button .badge+.k{display:none}
+.side-foot{margin-top:auto;display:flex;flex-direction:column;gap:6px}
+.store{font-size:12px;color:var(--muted);padding:0 10px;display:flex;gap:8px;align-items:center}
+.store i{width:7px;height:7px;border-radius:50%;background:var(--muted-2);flex:none}
+.store.ok i{background:#34C759}
+.main{margin:8px 8px 8px 0;border-radius:14px;background:var(--surface);overflow-y:auto;overflow-x:hidden;min-width:0;position:relative;box-shadow:0 0 0 .5px var(--hair),0 1px 3px rgba(40,60,90,.06)}
+.page{max-width:1080px;margin:0 auto;padding:30px clamp(16px,3.2vw,40px) 56px;display:flex;flex-direction:column;gap:18px}
+.tabbar{display:none}
+@media (max-width:860px){
+  .app{grid-template-columns:minmax(0,1fr);background:var(--surface)}
+  .side{display:none}
+  .main{margin:0;border-radius:0;box-shadow:none}
+  .page{padding:18px 16px 128px;gap:14px}
+  .tabbar{display:flex;position:fixed;left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom,0px));height:62px;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-radius:999px;align-items:center;justify-content:space-around;padding:0 6px;z-index:30;box-shadow:0 0 0 .5px var(--hair),0 8px 28px rgba(40,60,90,.14)}
+}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;border:0;background:none;color:var(--muted);font:500 10.5px var(--f);padding:6px 4px;min-width:56px;border-radius:999px}
+.tab[aria-current="page"]{color:var(--accent)}
+.tab-plus{width:50px;height:50px;min-width:50px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;padding:0;box-shadow:0 4px 12px rgba(0,122,255,.35)}
+
+/* type */
+h1,h2,h3{margin:0;text-wrap:balance}
+.h1{font:700 clamp(28px,3.6vw,34px)/1.12 var(--f-d);letter-spacing:-.022em}
+.h2{font:700 21px/1.2 var(--f-d);letter-spacing:-.018em}
+.h3{font:600 17px/1.3 var(--f-d);letter-spacing:-.012em}
+.hl{color:var(--accent)}
+.eyebrow{font:600 12px/1.2 var(--f);letter-spacing:.02em;text-transform:uppercase;color:var(--muted)}
+.dk .eyebrow,.olive .eyebrow{color:var(--slate)}
+.muted{color:var(--muted)}
+.num{font:700 1em/1 var(--f-r);font-variant-numeric:tabular-nums}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.head .actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* surfaces */
+.card{background:var(--card);border-radius:18px;padding:20px;min-width:0;box-shadow:0 0 0 .5px var(--hair)}
+.dk{background:var(--card);color:var(--text);border-radius:22px;padding:24px;min-width:0;box-shadow:0 0 0 .5px var(--hair)}
+.dk.hero{background:linear-gradient(160deg,#F4F8FD 0%,var(--hero) 100%)}
+.olive{background:var(--slate-soft);color:var(--text);border-radius:14px;padding:12px 14px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px}
+
+/* controls */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:40px;padding:0 18px;border-radius:11px;border:0;font:600 15px var(--f);white-space:nowrap;text-decoration:none;transition:background .15s,transform .1s}
+.btn:active:not(:disabled){transform:scale(.97)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-gold{background:var(--accent);color:#fff}
+.btn-gold:hover:not(:disabled){background:var(--accent-press)}
+.btn-dark{background:var(--fill);color:var(--text)}
+.btn-line{background:var(--accent-soft);color:var(--accent-ink)}
+.btn-line:hover{background:#D3E4FA}
+.btn-ghost{background:transparent;color:var(--accent);padding:0 10px}
+.btn-danger{background:var(--bad-soft);color:var(--bad)}
+.btn-lg{height:50px;padding:0 28px;font-size:16.5px;border-radius:14px}
+.btn-sm{height:32px;padding:0 13px;font-size:13.5px;border-radius:9px}
+.ibtn{width:38px;height:38px;border-radius:50%;border:0;background:var(--fill);color:var(--accent);display:inline-grid;place-items:center;flex:none}
+.ibtn:hover{background:var(--hero-2)}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{height:32px;padding:0 14px;border-radius:999px;border:0;background:var(--fill);color:var(--text);font:500 13.5px var(--f);display:inline-flex;align-items:center;gap:6px}
+.chip:hover{background:var(--hero-2)}
+.chip[aria-pressed="true"]{background:var(--accent);color:#fff}
+.chip .n{font-weight:400;opacity:.65}
+.seg-ctl{display:inline-flex;background:var(--fill);border-radius:10px;padding:2px;gap:2px}
+.seg-ctl .chip{border-radius:8px;background:transparent;height:30px}
+.seg-ctl .chip[aria-pressed="true"]{background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(40,60,90,.15),0 0 0 .5px var(--hair)}
+.pill{display:inline-flex;align-items:center;font:600 11.5px/1 var(--f);padding:5px 9px;border-radius:999px;white-space:nowrap}
+.st-new{background:var(--fill);color:var(--muted)}
+.st-learning{background:var(--accent-soft);color:var(--accent-ink)}
+.st-learned{background:var(--accent);color:#fff}
+.st-hard{background:var(--bad-soft);color:var(--bad)}
+.tag-auto{background:var(--slate-soft);color:var(--slate);letter-spacing:.06em;font-size:10px}
+.tag-need{background:var(--warn-soft);color:var(--warn)}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field>span{font:500 13px var(--f);color:var(--muted)}
+.inp,.sel{height:42px;border-radius:10px;border:0;background:var(--card);box-shadow:inset 0 0 0 1px var(--line);padding:0 12px;color:var(--text);width:100%;min-width:0}
+.sel{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 17px) 18px,calc(100% - 12px) 18px;background-size:5px 5px;background-repeat:no-repeat;padding-right:32px}
+.inp:focus,.sel:focus,.ta:focus{box-shadow:inset 0 0 0 1px var(--accent),0 0 0 3.5px var(--focus);outline:none}
+.ta{width:100%;min-height:190px;border-radius:14px;border:0;box-shadow:inset 0 0 0 1px var(--line);background:var(--card);padding:14px 16px;font:400 16px/1.55 var(--f);color:var(--text);resize:vertical}
+.search{position:relative;flex:1 1 240px;min-width:0}
+.search .ic{position:absolute;left:12px;top:12px;color:var(--muted-2)}
+.search .inp{padding-left:38px;background:var(--fill);box-shadow:none}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1}
+
+/* today */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center;padding:28px}
+.hero-nums{display:flex;gap:clamp(24px,5vw,52px);margin:14px 0 4px;flex-wrap:wrap}
+.bignum{font:700 clamp(54px,8vw,78px)/.95 var(--f-r);color:var(--accent);font-variant-numeric:tabular-nums;display:inline-block;letter-spacing:-.02em}
+#heroNew{color:var(--slate)}
+.bignum-l{display:block;margin-top:8px;color:var(--muted);font-size:14px}
+.hero-cta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.hero-meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;color:var(--muted);font-size:13.5px}
+.hero-meta span{display:inline-flex;align-items:center;gap:6px}
+.hero-meta .ic{color:#FF9500}
+.hero-meta b{color:var(--text);font-family:var(--f-r)}
+.dots{display:inline-flex;gap:4px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--hero-2)}
+.dots i.on{background:var(--accent)}
+.ring{position:relative;width:150px;height:150px}
+.ring svg{transform:rotate(-90deg)}
+.ring .rv-t{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring .rv-t b{font:700 28px/1 var(--f-r);color:var(--text)}
+.ring .rv-t small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.note{margin-top:16px;font-size:14px}
+@media (max-width:560px){.hero{grid-template-columns:1fr;padding:22px;position:relative}.ring{width:110px;height:110px;position:absolute;right:16px;top:16px}.ring svg{width:110px;height:110px}.ring .rv-t b{font-size:21px}.ring .rv-t small{font-size:10.5px}.hero-nums{margin-top:52px}}
+.bar{height:8px;border-radius:999px;background:var(--fill);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.seg{display:flex;height:7px;border-radius:999px;overflow:hidden;background:var(--fill)}
+.seg i{display:block;height:100%}
+.word-day{font:700 25px/1.15 var(--f-d);letter-spacing:-.02em;margin:6px 0 2px;overflow-wrap:anywhere}
+
+/* lists (inset grouped) */
+.list{display:flex;flex-direction:column;background:var(--card);border-radius:16px;box-shadow:0 0 0 .5px var(--hair);overflow:hidden}
+.list>*+*{border-top:.5px solid var(--line)}
+.wrow{display:flex;align-items:center;gap:10px;padding:4px 10px 4px 4px;background:var(--card)}
+.wrow-main{flex:1;min-width:0;display:flex;align-items:center;gap:12px;border:0;background:none;text-align:left;padding:9px 12px;border-radius:12px}
+.wrow-main:hover{background:var(--card-2)}
+.wtxt{min-width:0;flex:1}
+.wtxt b{display:block;font-weight:600;font-size:15.5px;overflow-wrap:anywhere}
+.wtxt span{display:block;color:var(--muted);font-size:14px;overflow-wrap:anywhere}
+.wpills{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.more-list .wrow-main{padding:15px 16px;border-radius:0}
+.more-list .wrow-main .ic{color:var(--accent)}
+.empty{background:var(--card);border-radius:18px;padding:32px 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;box-shadow:0 0 0 .5px var(--hair)}
+.empty p{margin:0;max-width:44ch;color:var(--muted)}
+.mode{display:flex;flex-direction:column;gap:10px;padding:22px}
+.mode .mi{width:44px;height:44px;border-radius:11px;background:var(--accent);color:#fff;display:grid;place-items:center}
+.mode .mi.t2{background:#5856D6}.mode .mi.t3{background:#30B0C7}.mode .mi.t4{background:var(--slate)}.mode .mi.t5{background:#34A0DC}
+.mode p{margin:0;color:var(--muted);font-size:14px;flex:1}
+.mode.feat{background:linear-gradient(160deg,#F4F8FD 0%,var(--hero) 100%)}
+.setc{display:flex;flex-direction:column;gap:12px}
+.setc .meta{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.stat{display:flex;flex-direction:column;gap:6px}
+.stat .v{font:700 34px/1 var(--f-r);font-variant-numeric:tabular-nums}
+.dk .stat .v,.dk.stat .v{color:var(--accent)}
+.chart{width:100%;height:auto;display:block}
+.chart .ax{fill:var(--muted);font:400 11px var(--f)}
+.chart .gl{stroke:var(--grid);stroke-width:1}
+.scrollx{overflow-x:auto;padding-bottom:4px}
+.hm{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,13px);gap:3px;width:max-content}
+.hm i{width:13px;height:13px;border-radius:3.5px;background:var(--heat-0)}
+.hm i.l1{background:var(--h1)}.hm i.l2{background:var(--h2)}.hm i.l3{background:var(--h3)}.hm i.l4{background:var(--h4)}
+.hm i.fut{background:transparent}
+.hm-wrap{display:flex;gap:8px}
+.hm-days{display:grid;grid-template-rows:repeat(7,13px);gap:3px;font-size:10px;color:var(--muted);line-height:13px}
+.hard-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:.5px solid var(--line)}
+.hard-row:last-child{border-bottom:0}
+.hard-row .rk{font:600 13px var(--f-r);color:var(--muted-2);width:22px}
+.sess{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,.7fr));gap:8px;align-items:center;background:var(--card);padding:13px 18px}
+.sess b{font-variant-numeric:tabular-nums;font-weight:600}
+@media (max-width:560px){.sess{grid-template-columns:1fr 1fr 1fr}.sess>:first-child{grid-column:1/-1}}
+details.wh{background:var(--card);padding:0 16px}
+details.wh summary{list-style:none;cursor:pointer;display:flex;gap:10px;align-items:center;padding:12px 0}
+details.wh summary::-webkit-details-marker{display:none}
+details.wh[open] summary{border-bottom:.5px solid var(--line)}
+.gl-list{display:flex;flex-direction:column;gap:6px;padding:12px 0}
+.gl-item{display:flex;gap:10px;align-items:center;font-size:13.5px}
+.g1{background:var(--bad-soft);color:var(--bad)}.g2{background:var(--warn-soft);color:var(--warn)}.g3{background:var(--accent-soft);color:var(--accent-ink)}.g4{background:var(--good-soft);color:var(--good)}
+.gdots{display:flex;gap:3px;margin-left:auto}
+.gdots i{width:8px;height:8px;border-radius:50%}
+.gdots i.g1{background:#FF3B30}.gdots i.g2{background:#FF9500}.gdots i.g3{background:var(--accent)}.gdots i.g4{background:#34C759}
+
+/* sheet */
+.sheet-wrap{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:16px}
+.scrim{position:absolute;inset:0;background:var(--scrim);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.sheet{position:relative;background:var(--surface);color:var(--text);border-radius:20px;width:min(700px,100%);max-height:min(90vh,900px);overflow-y:auto;overflow-x:hidden;padding:24px;display:flex;flex-direction:column;gap:16px;animation:pop .3s cubic-bezier(.2,.8,.2,1);box-shadow:0 24px 70px rgba(30,45,70,.28),0 0 0 .5px var(--hair)}
+.sheet.wide{width:min(860px,100%)}
+.sheet-h{display:flex;align-items:flex-start;gap:12px;justify-content:space-between}
+.grab{display:none}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes up{from{transform:translateY(100%)}to{transform:none}}
+@media (max-width:860px){
+  .sheet-wrap{align-items:flex-end;padding:0}
+  .sheet,.sheet.wide{width:100%;border-radius:22px 22px 0 0;max-height:94%;padding:10px 16px calc(20px + env(safe-area-inset-bottom,0px));animation:up .34s cubic-bezier(.2,.8,.2,1)}
+  .grab{display:block;width:38px;height:5px;border-radius:999px;background:var(--muted-2);opacity:.5;margin:0 auto 4px}
+}
+.sheet-foot{position:sticky;bottom:-24px;margin:0 -24px -24px;padding:12px 24px 20px;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;border-top:.5px solid var(--line)}
+@media (max-width:860px){.sheet-foot{bottom:calc(-20px - env(safe-area-inset-bottom,0px));margin:0 -16px calc(-20px - env(safe-area-inset-bottom,0px));padding:12px 16px calc(16px + env(safe-area-inset-bottom,0px))}}
+.hint{font-size:13px;color:var(--muted)}
+.err{font-size:14px;color:var(--bad);font-weight:600}
+
+/* review cards */
+.rv-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:10px}
+.rv{background:var(--card);border-radius:16px;padding:14px 14px 14px 16px;display:flex;flex-direction:column;gap:6px;position:relative;min-width:0;box-shadow:0 0 0 .5px var(--hair),0 1px 2px rgba(40,60,90,.05)}
+.rv.removed{opacity:.4}
+.rv .top{display:flex;gap:6px;align-items:center}
+.rv input{border:0;background:transparent;width:100%;min-width:0;padding:4px 0;border-bottom:1px solid transparent;color:var(--text)}
+.rv input:focus{outline:none;border-bottom-color:var(--accent)}
+.rv .en{font:600 17px/1.25 var(--f-d);letter-spacing:-.01em}
+.rv .uk{font:400 15px var(--f)}
+.rv .uk.need{border-bottom:1px solid var(--warn)}
+.rv .meta{font-size:12.5px;color:var(--muted);overflow-wrap:anywhere}
+.rv .ex{font-size:13px;color:var(--muted);font-style:italic;overflow-wrap:anywhere}
+.rv .badges{display:flex;gap:6px;flex-wrap:wrap}
+.rv .x{position:absolute;right:8px;top:8px;width:28px;height:28px;color:var(--muted)}
+.dup{background:var(--card-2);border-radius:12px;padding:8px 10px;font-size:13px;display:flex;flex-direction:column;gap:6px}
+.dup .chips .chip{height:28px;font-size:12.5px;padding:0 10px}
+.sk{display:block;height:15px;width:62%;border-radius:999px;background:var(--fill);animation:pulse 1.1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.45}}
+@keyframes land{from{opacity:0;transform:translateY(-22px) scale(.94)}to{opacity:1;transform:none}}
+.land{animation:land .48s cubic-bezier(.2,.9,.25,1.15) both}
+@keyframes reveal{from{opacity:0;filter:blur(6px);transform:translateY(3px)}to{opacity:1;filter:none;transform:none}}
+.reveal{animation:reveal .5s ease-out both}
+
+/* fly */
+.fly{position:fixed;left:0;top:0;z-index:90;background:var(--accent);color:#fff;font:600 13px var(--f-r);padding:6px 12px;border-radius:999px;pointer-events:none;white-space:nowrap;will-change:transform,opacity;box-shadow:0 4px 12px rgba(0,122,255,.35)}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.28)}65%{transform:scale(.94)}100%{transform:scale(1)}}
+.bump{animation:bump .5s cubic-bezier(.3,.7,.3,1.4)}
+@keyframes ringflash{0%{box-shadow:0 0 0 .5px var(--hair),0 0 0 0 rgba(0,122,255,0)}30%{box-shadow:0 0 0 .5px var(--hair),0 0 0 6px rgba(0,122,255,.35)}100%{box-shadow:0 0 0 .5px var(--hair),0 0 0 16px rgba(0,122,255,0)}}
+.flash{animation:ringflash .9s ease-out}
+
+/* training */
+.train{position:fixed;inset:0;z-index:50;background:var(--surface);display:flex;flex-direction:column;padding:calc(12px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.t-top{display:flex;align-items:center;gap:12px;max-width:760px;width:100%;margin:0 auto}
+.t-prog{flex:1;height:6px;border-radius:999px;background:var(--fill);overflow:hidden}
+.t-prog i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .3s}
+.t-count{font:600 13px var(--f-r);color:var(--muted);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+.t-kind{display:flex;justify-content:center;max-width:760px;width:100%;margin:10px auto 0}
+.t-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;max-width:760px;width:100%;margin:0 auto;min-height:0;overflow-y:auto;padding:14px 0}
+.t-bottom{max-width:760px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:10px;align-items:stretch}
+.flip{perspective:1400px;width:min(560px,100%);height:clamp(250px,44vh,380px);cursor:pointer;flex:none}
+.flip-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.2,.75,.25,1)}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:26px 22px;text-align:center;overflow:hidden;box-shadow:0 0 0 .5px var(--hair),0 10px 30px rgba(40,60,90,.09)}
+.front{background:var(--card)}
+.back{background:linear-gradient(160deg,#F6F9FD 0%,var(--hero) 100%);color:var(--text);transform:rotateY(180deg)}
+.wbig{font:700 clamp(30px,6.4vw,48px)/1.1 var(--f-d);letter-spacing:-.025em;overflow-wrap:anywhere;max-width:100%}
+.wmid{font:700 clamp(23px,4.6vw,32px)/1.15 var(--f-d);letter-spacing:-.02em;overflow-wrap:anywhere;max-width:100%}
+.ipa{color:var(--muted);font-size:16px}
+.say{display:flex;gap:10px;align-items:center;justify-content:center}
+.exbox{text-align:left;max-width:100%;margin-top:6px;width:min(560px,100%)}
+.back .exbox{background:rgba(255,255,255,.65)}
+.exbox p{margin:4px 0 0;font-size:15px}
+.exbox p+p{color:var(--muted);font-size:14px}
+.hint-key{font-size:12.5px;color:var(--muted-2)}
+.grades{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.grades.g3c{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grade{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;height:60px;border-radius:14px;border:0;font:600 15px var(--f);padding:0 4px;min-width:0;transition:transform .1s}
+.grade:active{transform:scale(.97)}
+.grade small{font:400 12px var(--f-r);opacity:.75}
+.grade .k{display:none}
+.gr1{background:var(--bad-soft);color:var(--bad)}
+.gr2{background:var(--warn-soft);color:var(--warn)}
+.gr3{background:var(--accent);color:#fff}
+.gr4{background:var(--good-soft);color:var(--good)}
+.grade.sugg{box-shadow:0 0 0 2.5px var(--surface),0 0 0 4.5px var(--accent)}
+.grade.gr-next{background:var(--accent);color:#fff}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:min(600px,100%)}
+@media (max-width:480px){.opts{grid-template-columns:1fr}}
+.opt{min-height:58px;border-radius:14px;border:0;background:var(--card);padding:12px 14px;display:flex;align-items:center;gap:12px;text-align:left;font:500 16px var(--f);color:var(--text);box-shadow:0 0 0 .5px var(--hair),0 1px 2px rgba(40,60,90,.05);transition:transform .1s,background .15s}
+.opt:hover:not(:disabled){background:var(--card-2)}
+.opt:active:not(:disabled){transform:scale(.98)}
+.opt .kk{width:24px;height:24px;border-radius:50%;background:var(--fill);color:var(--muted);display:grid;place-items:center;font:600 12px var(--f-r);flex:none}
+.opt.ok{background:var(--good-soft);color:var(--good);box-shadow:0 0 0 1.5px #34C759}
+.opt.ok .kk{background:#34C759;color:#fff}
+.opt.no{background:var(--bad-soft);color:var(--bad);box-shadow:0 0 0 1.5px #FF3B30}
+.opt.no .kk{background:#FF3B30;color:#fff}
+.opt.dim{opacity:.5}
+.opt:disabled{cursor:default}
+.prompt{background:var(--card);border-radius:24px;padding:26px 22px;width:min(600px,100%);display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;box-shadow:0 0 0 .5px var(--hair),0 10px 30px rgba(40,60,90,.07)}
+.listen-btn{width:110px;height:110px;border-radius:50%;border:0;background:var(--accent);color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,122,255,.3)}
+.type-in{width:min(600px,100%);height:56px;border-radius:14px;border:0;box-shadow:inset 0 0 0 1px var(--line);background:var(--card);padding:0 20px;font:500 18px var(--f);color:var(--text);text-align:center}
+.type-in:focus{outline:none;box-shadow:inset 0 0 0 1px var(--accent),0 0 0 4px var(--focus)}
+.result{width:min(600px,100%);border-radius:14px;padding:13px 18px;display:flex;flex-direction:column;gap:4px}
+.result.ok{background:var(--good-soft);color:var(--good)}
+.result.typo{background:var(--warn-soft);color:var(--warn)}
+.result.no{background:var(--bad-soft);color:var(--bad)}
+.result .ans{font:700 20px/1.2 var(--f-d);overflow-wrap:anywhere}
+.done-nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:min(560px,100%)}
+.done-nums div{background:var(--card);border-radius:16px;padding:16px;text-align:center;box-shadow:0 0 0 .5px var(--hair)}
+.done-nums b{display:block;font:700 30px/1 var(--f-r);font-variant-numeric:tabular-nums;color:var(--accent)}
+.done-nums span{font-size:12.5px;color:var(--muted)}
+
+.nav .badge.new{background:var(--accent);color:#fff;border-radius:999px;padding:1px 7px;font-size:11.5px}
+.tdot{position:absolute;top:6px;right:16px;width:8px;height:8px;border-radius:50%;background:#FF3B30}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:10px}
+.lib-who{font-size:13px;color:var(--muted)}
+.lib-sample{font-size:13.5px;color:var(--muted);overflow-wrap:anywhere;margin:0}
+.pill.share{background:var(--accent-soft);color:var(--accent-ink)}
+.pill.own{background:var(--fill);color:var(--muted)}
+.pill.fresh{background:#FF3B30;color:#fff}
+.note-box{background:var(--slate-soft);border-radius:14px;padding:12px 14px;font-size:13.5px;color:var(--slate)}
+.chk{display:flex;gap:10px;align-items:center;font-size:14px}
+.chk input{width:20px;height:20px;accent-color:#007AFF}
+/* toast */
+.toasts{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom,0px));z-index:100;display:flex;flex-direction:column;gap:8px;align-items:center;width:min(520px,calc(100% - 32px));pointer-events:none}
+@media (min-width:861px){.toasts{bottom:28px}}
+.toast{pointer-events:auto;background:rgba(36,44,56,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);color:#fff;border-radius:999px;padding:9px 9px 9px 18px;display:flex;gap:12px;align-items:center;font-size:14px;animation:pop .25s ease-out;max-width:100%;box-shadow:0 8px 24px rgba(20,30,45,.22)}
+.toast span{flex:1;min-width:0}
+.toast button{height:32px;padding:0 14px;border-radius:999px;border:0;background:rgba(255,255,255,.18);color:#fff;font-weight:600;font-size:13px}
+.toast.plain{padding-right:18px}
+
+/* lesson */
+.ln{max-width:860px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:12px;flex:1;min-height:0}
+.ln-top{display:flex;align-items:center;gap:12px}
+.ln-title{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ln-title b{font:700 20px/1.2 var(--f-d);letter-spacing:-.015em;overflow-wrap:anywhere}
+.ln-title span{font-size:13px}
+.ln-score{font:600 13px var(--f-r);background:var(--accent-soft);color:var(--accent-ink);padding:7px 12px;border-radius:999px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.ln-tabs{overflow-x:auto;flex-wrap:nowrap;padding:2px 2px 4px}
+.ln-tabs .chip{flex:none}
+.ln-body{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding:4px 2px 24px}
+.ln-body>*{flex-shrink:0}
+.ln-h{display:flex;flex-direction:column;gap:4px}
+.ln-h p{margin:0}
+.ln-pool{border:2px dashed var(--accent);border-radius:18px;padding:14px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;min-height:68px;background:var(--card)}
+.ln-chip{min-height:36px;padding:4px 14px;border-radius:999px;border:2px solid var(--accent);background:var(--card);color:var(--text);font:500 14.5px var(--f);cursor:grab;display:inline-flex;align-items:center;gap:6px}
+.ln-chip[aria-pressed="true"]{background:var(--accent);color:#fff}
+.ln-chip small{color:var(--muted);font-size:12px}
+.ln-chip[aria-pressed="true"] small{color:#fff;opacity:.85}
+.ln-boxes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.ln-boxes{grid-template-columns:1fr}}
+.ln-box{border:2px solid;border-radius:18px;padding:12px;min-height:140px;display:flex;flex-direction:column;gap:8px;align-items:center;cursor:pointer;text-align:center}
+.ln-box>b{font:600 15px var(--f)}
+.ln-box .in{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.lb-know{border-color:#34C759;background:var(--good-soft)}
+.lb-learning{border-color:#FF9500;background:var(--warn-soft)}
+.lb-forgot{border-color:#FF3B30;background:var(--bad-soft)}
+.ln-box.over,.ln-pool.over{box-shadow:0 0 0 4px var(--focus)}
+.ln-voc .wtxt i{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.ln-pairs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ln-col{display:flex;flex-direction:column;gap:8px}
+.ln-m{min-height:50px;border-radius:14px;border:0;background:var(--card);padding:10px 14px;text-align:left;font:500 15.5px var(--f);color:var(--text);box-shadow:0 0 0 .5px var(--hair),0 1px 2px rgba(40,60,90,.05);overflow-wrap:anywhere;transition:background .15s}
+.ln-m.sel{box-shadow:0 0 0 2px var(--accent);background:var(--accent-soft)}
+.ln-m.ok{background:var(--good-soft);color:var(--good);box-shadow:0 0 0 1.5px #34C759}
+.ln-m.no{background:var(--bad-soft);color:var(--bad);box-shadow:0 0 0 1.5px #FF3B30}
+.ln-m:disabled{cursor:default}
+.ln-q{background:var(--card);border-radius:16px;padding:12px 16px;box-shadow:0 0 0 .5px var(--hair);font-size:16px;line-height:2.1}
+.ln-q .n{color:var(--muted);font-weight:600;margin-right:6px}
+.ln-sel{display:inline-block;width:auto;min-width:140px;height:36px;margin:0 4px;vertical-align:middle;font-size:15px}
+.ln-sel.ok{box-shadow:inset 0 0 0 2px #34C759;background-color:var(--good-soft)}
+.ln-sel.no{box-shadow:inset 0 0 0 2px #FF3B30;background-color:var(--bad-soft)}
+.ln-opts{display:flex;gap:8px;flex-wrap:wrap}
+.ln-o{min-height:38px;padding:4px 16px;border-radius:10px;border:0;background:var(--fill);color:var(--text);font:500 15px var(--f)}
+.ln-o:hover:not(:disabled){background:var(--hero-2)}
+.ln-o:disabled{cursor:default}
+.ln-o.ok{background:var(--good-soft);color:var(--good);box-shadow:inset 0 0 0 2px #34C759}
+.ln-o.no{background:var(--bad-soft);color:var(--bad);box-shadow:inset 0 0 0 2px #FF3B30}
+.ln-card{border:2px dashed var(--accent);border-radius:18px;padding:22px;text-align:center;font:600 18px/1.4 var(--f-d);background:var(--card);display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.ln-ex{border-left:3px solid var(--accent);background:var(--card);padding:10px 14px;border-radius:0 12px 12px 0;font-size:14.5px}
+.ln-words{display:flex;flex-wrap:wrap;gap:6px}
+.ln-w{font:500 12.5px var(--f);padding:4px 10px;border-radius:999px;background:var(--fill);color:var(--muted)}
+.ln-w.on{background:var(--good-soft);color:var(--good)}
+.ln-cnt.done{color:var(--good)}
+.ln-fb p{margin:6px 0 0;white-space:pre-wrap}
+.ln-fb ul{margin:8px 0 0;padding-left:20px}
+.ln-fb li{margin:4px 0}
+.ln-foot{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.sk-row{height:54px;border-radius:16px;background:var(--fill);animation:pulse 1.1s ease-in-out infinite}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .flip-in{transition:none}
+}
+</style>
+
+<div class="app" id="app">
+  <aside class="side" aria-label="Меню">
+    <div class="logo"><div class="logo-mark" aria-hidden="true">Сс</div><div>Слово<br>за словом<small>картки для англійської</small></div></div>
+    <button class="add-big" data-act="add" aria-label="Додати слова (N)"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Додати слова <kbd>N</kbd></button>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">
+      <div class="store" id="store"><i></i><span>Завантаження…</span></div>
+      <div class="nav"><button data-act="settings"><span id="gearIc"></span>Налаштування</button></div>
+    </div>
+  </aside>
+  <main class="main" id="main"><div class="page" id="page"></div></main>
+  <nav class="tabbar" id="tabbar" aria-label="Розділи"></nav>
+</div>
+<div class="train" id="train" hidden role="dialog" aria-modal="true" aria-label="Тренування"></div>
+<div class="sheet-wrap" id="sheetWrap" hidden><div class="scrim" data-act="closeSheet"></div><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const RM=matchMedia('(prefers-reduced-motion: reduce)');
+const reduced=()=>RM.matches;
+const MIN=60000,HOUR=3600000,DAY=86400000,CUT=4;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const MON=['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
+const MON_S=['січ.','лют.','бер.','квіт.','трав.','черв.','лип.','серп.','вер.','жовт.','лист.','груд.'];
+const WD=['неділя','понеділок','вівторок','середа','четвер','пʼятниця','субота'];
+
+/* ---------- time ---------- */
+function dayKey(ts){if(ts==null)ts=Date.now();const d=new Date(ts-CUT*HOUR);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function keyDate(k){const p=k.split('-').map(Number);return new Date(p[0],p[1]-1,p[2],CUT,0,0,0)}
+function dayStart(k,plus){const d=keyDate(k);d.setDate(d.getDate()+(plus||0));return d.getTime()}
+function addDays(k,n){return dayKey(dayStart(k,n))}
+function nextDay(){return dayStart(dayKey(),1)}
+function fmtD(k){const d=keyDate(k);return d.getDate()+' '+MON[d.getMonth()]}
+function fmtDT(ts){const d=new Date(ts);return d.getDate()+' '+MON_S[d.getMonth()]+', '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
+function fmtDur(ms){const s=Math.round(ms/1000);if(s<60)return s+' с';const m=Math.floor(s/60);return m+' хв'+(s%60&&m<10?' '+(s%60)+' с':'')}
+function plural(n,a,b,c){const m10=n%10,m100=n%100;if(m10===1&&m100!==11)return a;if(m10>=2&&m10<=4&&(m100<12||m100>14))return b;return c}
+const uid=()=>'k'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+
+/* ---------- icons ---------- */
+const ICON={
+home:'<path d="M4 11.5 12 5l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/>',
+cards:'<rect x="3" y="7" width="13" height="14" rx="3"/><path d="M8 3h10a3 3 0 0 1 3 3v11"/>',
+list:'<path d="M9 6h12M9 12h12M9 18h12"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>',
+folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+chart:'<path d="M5 20V11M11 20V5M17 20v-7M3 20h18"/>',
+clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',
+speaker:'<path d="M4 9.5v5h3.5L12 18V6L7.5 9.5z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>',
+x:'<path d="M6 6l12 12M18 6 6 18"/>',
+flame:'<path d="M12 3c.8 3.4 5 5.4 5 10a5 5 0 0 1-10 0c0-2.2 1-3.7 2.3-4.8.2 1.3.8 2.2 1.7 2.8C11 9 11.2 6 12 3z"/>',
+more:'<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>',
+search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+pen:'<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+play:'<path d="M8 5.5v13l10.5-6.5z"/>',
+flip:'<path d="M4 8h11a4 4 0 0 1 0 8H8"/><path d="m11 19-3-3 3-3"/>',
+mix:'<rect x="2.5" y="5" width="10" height="14" rx="2.5"/><rect x="15" y="5" width="6.5" height="6" rx="1.8"/><rect x="15" y="13" width="6.5" height="6" rx="1.8"/>',
+type:'<rect x="2.5" y="6" width="19" height="12" rx="3"/><path d="M6.5 10h.01M10 10h.01M14 10h.01M17.5 10h.01M7.5 14h9"/>',
+grid:'<rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/>',
+ear:'<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4.5" height="6.5" rx="2"/><rect x="16.5" y="14" width="4.5" height="6.5" rx="2"/>',
+down:'<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
+up:'<path d="M12 20V9M7 14l5-5 5 5M5 4h14"/>',
+check:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+book:'<path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v16H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M4 20.5A1.5 1.5 0 0 0 5.5 22H20"/><path d="M8 7h8M8 11h6"/>'
+};
+function ic(n,s,w){return '<svg class="ic" width="'+(s||20)+'" height="'+(s||20)+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(w||1.9)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICON[n]+'</svg>'}
+
+/* ---------- starter deck (Sasha's list, corrected as agreed) ---------- */
+const SETS0=[{id:'s_l',name:'Слова-звʼязки'},{id:'s_v',name:'Дієслова'},{id:'s_t',name:'Фрази для розмови'},{id:'s_m',name:'Різне'}];
+const ST=[
+['opinion','думка','ім.','/əˈpɪnjən/','In my opinion, this café is the best in town.','На мою думку, це кафе найкраще в місті.','s_m'],
+['however','однак','присл.','/haʊˈɛvər/','I like summer. However, I hate the heat.','Я люблю літо. Однак я терпіти не можу спеку.','s_l'],
+['disagreements','розбіжності','ім.','/ˌdɪsəˈɡriːmənts/','We have small disagreements, but we are still friends.','У нас є невеликі розбіжності, але ми досі друзі.','s_m'],
+['disagree','не погоджуюся','дієсл.','/ˌdɪsəˈɡriː/','Sorry, I disagree with you.','Вибач, я з тобою не погоджуюся.','s_v'],
+['feature','особливість, функція','ім.','/ˈfiːtʃər/','The best feature of this phone is the camera.','Найкраща особливість цього телефона — камера.','s_m'],
+['improved','покращений','прикм.','/ɪmˈpruːvd/','The new version is much improved.','Нова версія значно покращена.','s_m'],
+['wrap','обгортка','ім.','/ræp/','Take off the plastic wrap first.','Спершу зніми пластикову обгортку.','s_m'],
+['unwrap','розгорнути','дієсл.','/ʌnˈræp/','The kids couldn’t wait to unwrap their presents.','Діти не могли дочекатися, щоб розгорнути подарунки.','s_v'],
+['lose','загубити, втратити','дієсл.','/luːz/','I always lose my keys.','Я постійно гублю ключі.','s_v'],
+['decide','вирішити','дієсл.','/dɪˈsaɪd/','I can’t decide what to wear.','Не можу вирішити, що вдягнути.','s_v'],
+['recently','нещодавно','присл.','/ˈriːsəntli/','I recently moved to a new apartment.','Я нещодавно переїхала в нову квартиру.','s_m'],
+['overwhelmed','перевантажений','прикм.','/ˌoʊvərˈwɛlmd/','I feel a bit overwhelmed at work this week.','Цього тижня я трохи перевантажена на роботі.','s_m'],
+['almost','майже','присл.','/ˈɔːlmoʊst/','I’m almost ready, give me five minutes.','Я майже готова, дай мені пʼять хвилин.','s_m'],
+['satisfy','задовольняти','дієсл.','/ˈsætɪsfaɪ/','It’s hard to satisfy everyone.','Важко задовольнити всіх.','s_v'],
+['cancer','рак (хвороба)','ім.','/ˈkænsər/','Smoking can cause cancer.','Куріння може спричинити рак.','s_m'],
+['although','хоча','спол.','/ɔːlˈðoʊ/','Although it was raining, we went for a walk.','Хоча йшов дощ, ми пішли гуляти.','s_l'],
+['completely','повністю','присл.','/kəmˈpliːtli/','I completely forgot about the meeting.','Я повністю забула про зустріч.','s_m'],
+['avoid','уникати','дієсл.','/əˈvɔɪd/','I try to avoid sugar.','Я намагаюся уникати цукру.','s_v'],
+['afford','дозволити собі','дієсл.','/əˈfɔːrd/','We can’t afford a new car right now.','Зараз ми не можемо дозволити собі нову машину.','s_v'],
+['improve','покращувати','дієсл.','/ɪmˈpruːv/','I want to improve my English.','Я хочу покращити свою англійську.','s_v'],
+['manage','впоратися, зуміти','дієсл.','/ˈmænɪdʒ/','Don’t worry, I’ll manage.','Не хвилюйся, я впораюся.','s_v'],
+['suggest','пропонувати','дієсл.','/səɡˈdʒɛst/','Can you suggest a good restaurant?','Можеш запропонувати хороший ресторан?','s_v'],
+['realize','усвідомлювати','дієсл.','/ˈriːəlaɪz/','I didn’t realize it was so late.','Я не усвідомлювала, що вже так пізно.','s_v'],
+['depend','залежати','дієсл.','/dɪˈpɛnd/','It depends on the weather.','Це залежить від погоди.','s_v'],
+['expect','очікувати','дієсл.','/ɪkˈspɛkt/','I didn’t expect to see you here!','Не очікувала тебе тут побачити!','s_v'],
+['prefer','надавати перевагу','дієсл.','/prɪˈfɝː/','I prefer tea to coffee.','Я надаю перевагу чаю, а не каві.','s_v'],
+['unless','якщо не','спол.','/ənˈlɛs/','We’ll go to the beach unless it rains.','Ми підемо на пляж, якщо не буде дощу.','s_l'],
+['in fact','насправді','фраза','/ɪn ˈfækt/','I don’t mind. In fact, I love it!','Я не проти. Насправді мені це дуже подобається!','s_l'],
+['at least','принаймні','фраза','/æt ˈliːst/','It’s cold, but at least it’s sunny.','Холодно, але принаймні сонячно.','s_l'],
+['anyway','у будь-якому разі','присл.','/ˈɛniweɪ/','Anyway, how was your weekend?','У будь-якому разі, як минули твої вихідні?','s_l'],
+['besides','крім того','присл.','/bɪˈsaɪdz/','It’s too late to go out. Besides, I’m tired.','Вже запізно кудись іти. Крім того, я втомилася.','s_l'],
+['meanwhile','тим часом','присл.','/ˈmiːnwaɪl/','I’ll cook dinner. Meanwhile, you can set the table.','Я приготую вечерю. Тим часом можеш накрити на стіл.','s_l'],
+['overall','загалом','присл.','/ˌoʊvərˈɔːl/','Overall, it was a great trip.','Загалом це була чудова подорож.','s_l'],
+['instead','натомість','присл.','/ɪnˈstɛd/','I didn’t go out. I stayed home instead.','Я нікуди не пішла. Натомість залишилася вдома.','s_l'],
+['honestly','чесно кажучи','присл.','/ˈɑːnɪstli/','Honestly, I didn’t like the movie.','Чесно кажучи, фільм мені не сподобався.','s_l'],
+['literally','буквально / просто','присл.','/ˈlɪtərəli/','I literally ran to catch the bus.','Я буквально бігла, щоб устигнути на автобус.','s_l'],
+['emergency','надзвичайна ситуація','ім.','/ɪˈmɝːdʒənsi/','In an emergency, call 911.','У надзвичайній ситуації телефонуй 911.','s_m',1],
+['appreciate','цінувати, бути вдячним','дієсл.','/əˈpriːʃieɪt/','I really appreciate your advice.','Я дуже ціную твою пораду.','s_v',1],
+['unwrap cheese','розгорнути сир','фраза','/ʌnˈræp tʃiːz/','Can you unwrap the cheese for the sandwiches?','Можеш розгорнути сир для бутербродів?','s_t'],
+['I just didn’t have time','я просто не встигла','фраза','','Sorry, I just didn’t have time to call you.','Вибач, я просто не встигла тобі зателефонувати.','s_t'],
+['shooting for the stars','прагнути висот / досягнень','фраза','','She’s shooting for the stars with her new business.','Зі своїм новим бізнесом вона прагне висот.','s_t'],
+['fall in love','закохатися','фраза','/fɔːl ɪn lʌv/','It’s easy to fall in love with Italy.','В Італію легко закохатися.','s_t'],
+['would rather','я б краще…','фраза','/wʊd ˈræðər/','I’d rather stay home tonight.','Я б краще залишилася вдома сьогодні ввечері.','s_t'],
+['it turns out that…','виявляється, що…','фраза','','It turns out that he’s from Kyiv too.','Виявляється, що він теж з Києва.','s_t'],
+['even though…','незважаючи на те, що…','спол.','/ˈiːvən ðoʊ/','Even though I was tired, I went to the gym.','Незважаючи на те, що я була втомлена, я пішла в спортзал.','s_l'],
+['as soon as…','як тільки…','спол.','/æz ˈsuːn æz/','Call me as soon as you arrive.','Подзвони мені, як тільки приїдеш.','s_l'],
+['I can’t afford it','я не можу собі цього дозволити','речення','','','','s_t',1],
+['I try to avoid it','я намагаюся цього уникати','речення','','','','s_t',1],
+['I can manage with that','я можу з цим упоратися','речення','','','','s_t',1],
+['I just realized this','я щойно це усвідомила','речення','','','','s_t',1],
+['I really appreciate your help','я дуже ціную твою допомогу','речення','','','','s_t',1]
+];
+
+/* ---------- fallback mini dictionary ---------- */
+const DICT_RAW='be|бути|дієсл.;have|мати|дієсл.;do|робити|дієсл.;say|казати|дієсл.;go|йти, їхати|дієсл.;get|отримувати|дієсл.;make|робити, створювати|дієсл.;know|знати|дієсл.;think|думати|дієсл.;take|брати|дієсл.;see|бачити|дієсл.;come|приходити|дієсл.;want|хотіти|дієсл.;look|дивитися|дієсл.;use|використовувати|дієсл.;find|знаходити|дієсл.;give|давати|дієсл.;tell|розповідати|дієсл.;work|працювати|дієсл.;call|дзвонити|дієсл.;try|намагатися|дієсл.;ask|питати|дієсл.;need|потребувати|дієсл.;feel|відчувати|дієсл.;become|ставати|дієсл.;leave|залишати, йти|дієсл.;put|класти|дієсл.;mean|означати|дієсл.;keep|тримати, зберігати|дієсл.;let|дозволяти|дієсл.;begin|починати|дієсл.;seem|здаватися|дієсл.;help|допомагати|дієсл.;talk|розмовляти|дієсл.;turn|повертати|дієсл.;start|починати|дієсл.;show|показувати|дієсл.;hear|чути|дієсл.;play|грати|дієсл.;run|бігти|дієсл.;move|рухатися, переїжджати|дієсл.;like|подобатися|дієсл.;live|жити|дієсл.;believe|вірити|дієсл.;bring|приносити|дієсл.;happen|траплятися|дієсл.;write|писати|дієсл.;sit|сидіти|дієсл.;stand|стояти|дієсл.;pay|платити|дієсл.;meet|зустрічати|дієсл.;learn|вчити|дієсл.;change|змінювати|дієсл.;understand|розуміти|дієсл.;watch|дивитися|дієсл.;follow|слідувати|дієсл.;stop|зупиняти|дієсл.;speak|говорити|дієсл.;read|читати|дієсл.;spend|витрачати|дієсл.;grow|рости|дієсл.;open|відкривати|дієсл.;walk|гуляти, ходити|дієсл.;win|вигравати|дієсл.;remember|памʼятати|дієсл.;love|любити|дієсл.;buy|купувати|дієсл.;wait|чекати|дієсл.;send|надсилати|дієсл.;build|будувати|дієсл.;stay|залишатися|дієсл.;fall|падати|дієсл.;cut|різати|дієсл.;reach|досягати|дієсл.;eat|їсти|дієсл.;drink|пити|дієсл.;sleep|спати|дієсл.;cook|готувати|дієсл.;travel|подорожувати|дієсл.;forget|забувати|дієсл.;agree|погоджуватися|дієсл.;explain|пояснювати|дієсл.;hope|сподіватися|дієсл.;enjoy|насолоджуватися|дієсл.;worry|хвилюватися|дієсл.;choose|обирати|дієсл.;time|час|ім.;year|рік|ім.;people|люди|ім.;way|шлях, спосіб|ім.;day|день|ім.;man|чоловік|ім.;woman|жінка|ім.;child|дитина|ім.;world|світ|ім.;life|життя|ім.;hand|рука|ім.;part|частина|ім.;place|місце|ім.;week|тиждень|ім.;home|дім|ім.;house|будинок|ім.;family|сімʼя|ім.;friend|друг|ім.;money|гроші|ім.;city|місто|ім.;country|країна|ім.;job|робота|ім.;question|питання|ім.;problem|проблема|ім.;water|вода|ім.;food|їжа|ім.;room|кімната|ім.;book|книга|ім.;word|слово|ім.;night|ніч|ім.;morning|ранок|ім.;evening|вечір|ім.;car|машина|ім.;street|вулиця|ім.;door|двері|ім.;head|голова|ім.;face|обличчя|ім.;name|імʼя|ім.;idea|ідея|ім.;story|історія|ім.;weather|погода|ім.;trip|поїздка|ім.;ticket|квиток|ім.;airport|аеропорт|ім.;hotel|готель|ім.;breakfast|сніданок|ім.;lunch|обід|ім.;dinner|вечеря|ім.;bill|рахунок|ім.;weekend|вихідні|ім.;movie|фільм|ім.;music|музика|ім.;game|гра|ім.;phone|телефон|ім.;dog|собака|ім.;cat|кіт|ім.;apple|яблуко|ім.;bread|хліб|ім.;coffee|кава|ім.;tea|чай|ім.;good|добрий, хороший|прикм.;new|новий|прикм.;old|старий|прикм.;big|великий|прикм.;small|маленький|прикм.;long|довгий|прикм.;great|чудовий|прикм.;right|правильний|прикм.;high|високий|прикм.;different|інший, різний|прикм.;important|важливий|прикм.;bad|поганий|прикм.;easy|легкий|прикм.;hard|важкий|прикм.;happy|щасливий|прикм.;sad|сумний|прикм.;tired|втомлений|прикм.;busy|зайнятий|прикм.;free|вільний, безкоштовний|прикм.;cheap|дешевий|прикм.;expensive|дорогий|прикм.;beautiful|красивий|прикм.;hot|гарячий, спекотний|прикм.;cold|холодний|прикм.;early|ранній|прикм.;late|пізній|прикм.;ready|готовий|прикм.;sure|впевнений|прикм.;hungry|голодний|прикм.;angry|злий|прикм.;always|завжди|присл.;never|ніколи|присл.;often|часто|присл.;sometimes|іноді|присл.;usually|зазвичай|присл.;already|вже|присл.;still|досі|присл.;again|знову|присл.;together|разом|присл.;maybe|можливо|присл.;really|дійсно|присл.;actually|насправді|присл.;probably|ймовірно|присл.;today|сьогодні|присл.;tomorrow|завтра|присл.;yesterday|вчора|присл.;because|тому що|спол.;but|але|спол.;if|якщо|спол.;when|коли|спол.;while|поки|спол.;until|доки|спол.;give up|здаватися|фраза;look forward to|чекати з нетерпінням|фраза;run out of|закінчуватися|фраза;find out|дізнаватися|фраза;get up|вставати|фраза;look for|шукати|фраза;take care of|піклуватися про|фраза;turn on|вмикати|фраза;turn off|вимикати|фраза;pick up|забирати, підбирати|фраза;figure out|розібратися|фраза;hang out|проводити час|фраза;check in|реєструватися|фраза;get along with|ладнати з|фраза;how are you|як справи|фраза;thank you|дякую|фраза;nice to meet you|приємно познайомитися|фраза;excuse me|перепрошую|фраза';
+const DICT={},REV={};
+DICT_RAW.split(';').forEach(r=>{const p=r.split('|');DICT[p[0]]={uk:p[1],pos:p[2]};p[1].split(',').forEach(v=>{v=v.trim();if(v&&!REV[v])REV[v]={en:p[0],pos:p[2]}})});
+
+/* ---------- state ---------- */
+const DEF={newPerDay:8,sessionSize:15,reviewCap:60,dir:'mix',voice:'',rate:0.95,autoSpeak:true,goal:500,goalDate:'2026-12-31',name:'Сашо'};
+function makeCard(o,t){return{id:uid(),en:o.en||'',uk:o.uk||'',pos:o.pos||'',ipa:o.ipa||'',ex:o.ex||'',exUk:o.exUk||'',set:o.set||'',tags:o.tags||[],auto:!!o.auto,created:t||Date.now(),st:'new',ef:2.5,ivl:0,reps:0,step:0,due:0,lapses:0,wrong:0,right:0,hard:false,log:[],ch:0}}
+function freshState(){const now=Date.now();const cards=ST.map((r,i)=>makeCard({en:r[0],uk:r[1],pos:r[2],ipa:r[3],ex:r[4],exUk:r[5],set:r[6],auto:r[7]},now+i));const s={v:1,fresh:true,created:now,updated:now,settings:Object.assign({},DEF),sets:SETS0.map(x=>Object.assign({},x)),cards,daily:{},sessions:[]};assignChunks(s.cards);return s}
+function assignChunks(cards,existing){const cnt={};(existing||[]).forEach(c=>{cnt[c.ch]=(cnt[c.ch]||0)+1});cards.forEach(c=>{let n=0;while((cnt[n]||0)>=50)n++;c.ch=n;cnt[n]=(cnt[n]||0)+1})}
+function normalizeState(s){s.settings=Object.assign({},DEF,s.settings||{});s.sets=Array.isArray(s.sets)?s.sets:[];s.cards=Array.isArray(s.cards)?s.cards:[];s.daily=s.daily||{};s.sessions=Array.isArray(s.sessions)?s.sessions:[];s.sets.forEach(x=>{delete x.lib;delete x.skip});s.cards.forEach(c=>{delete c.lid;if(!c.id)c.id=uid();['en','uk','pos','ipa','ex','exUk','set'].forEach(f=>{if(c[f]==null)c[f]=''});if(!Array.isArray(c.log))c.log=[];if(!Array.isArray(c.tags))c.tags=[];if(!c.st)c.st='new';if(!c.ef)c.ef=2.5;['ivl','reps','step','due','lapses','wrong','right','ch'].forEach(f=>{if(typeof c[f]!=='number')c[f]=0});c.hard=!!c.hard;if(!c.created)c.created=Date.now()});return s}
+let S;
+const LS='slovo-za-slovom-v1';
+let lsOk=true,hadLocal=false;
+try{const t=localStorage.getItem(LS);if(t){S=normalizeState(JSON.parse(t));hadLocal=true}}catch(e){lsOk=false}
+if(!S)S=freshState();
+function emptyState(){return{v:1,created:Date.now(),updated:Date.now(),settings:Object.assign({},DEF,{name:'друже'}),sets:[],cards:[],daily:{},sessions:[],libMigrated:true,libSeen:0}}
+function pristine(){return !S.sessions.length&&!Object.keys(S.daily).some(k=>S.daily[k]&&S.daily[k].tot)}
+const card=id=>S.cards.find(c=>c.id===id);
+const setName=id=>{const s=S.sets.find(x=>x.id===id);return s?s.name:'Без набору'};
+const today=()=>dayKey();
+const dd=k=>{k=k||today();return S.daily[k]||(S.daily[k]={new:0,rev:0,tot:0,ok:0,ms:0,sess:0})};
+
+/* ---------- persistence ---------- */
+const P={col:null,mode:'local',dirty:new Set(),t:0,lt:0,busy:false,retry:0};
+function lsSave(){try{localStorage.setItem(LS,JSON.stringify(S));lsOk=true}catch(e){lsOk=false}renderStore()}
+function touch(){S.updated=Date.now();delete S.fresh;if(shGet())setDirty(1);for(const k of arguments)P.dirty.add(k);clearTimeout(P.lt);P.lt=setTimeout(lsSave,250);clearTimeout(P.t);P.t=setTimeout(flush,900)}
+function touchCard(c){touch('meta','ch:'+c.ch)}
+function touchAll(extraCh){P.dirty.add('meta');P.dirty.add('sessions');new Set(S.cards.map(c=>c.ch).concat(extraCh||[])).forEach(n=>P.dirty.add('ch:'+n));touch()}
+function body(k){if(k==='meta')return{v:1,created:S.created,updated:S.updated,settings:S.settings,sets:S.sets,daily:S.daily,libMigrated:!!S.libMigrated,libSeen:S.libSeen||0};if(k==='sessions')return{list:S.sessions.slice(-300)};const n=+k.slice(3);const cs=S.cards.filter(c=>c.ch===n);return cs.length?{cards:cs}:null}
+async function flush(){
+  if(!P.col||P.busy)return;P.busy=true;
+  try{
+    while(P.dirty.size&&P.col){
+      const k=P.dirty.values().next().value;P.dirty.delete(k);
+      const b=body(k),ref=P.col.doc(k.replace(':','_'));
+      try{if(b)await ref.set(JSON.parse(JSON.stringify(b)));else await ref.delete();P.retry=0;P.err=false}
+      catch(e){const c=e&&e.code;
+        if(c==='unavailable'&&P.retry<2){P.retry++;P.dirty.add(k);await sleep(1000+Math.random()*1500)}
+        else if(c==='quota_exceeded'){toast('Хмарне сховище заповнене. Зроби експорт і видали зайві картки.');break}
+        else if(c==='resource_exhausted'){P.dirty.add(k);break}
+        else{P.dirty.add(k);P.err=true;break}}
+    }
+  }finally{P.busy=false;if(!P.dirty.size)setDirty(0);renderStore()}
+  if(P.dirty.size&&P.col){clearTimeout(P.t);P.t=setTimeout(flush,P.err?30000:4000)}
+}
+const SH=LS+':sheet',DF=LS+':dirty';
+const shGet=()=>{try{return localStorage.getItem(SH)||''}catch(e){return''}};
+const dirtyFlag=()=>{try{return localStorage.getItem(DF)==='1'}catch(e){return false}};
+const setDirty=v=>{try{v?localStorage.setItem(DF,'1'):localStorage.removeItem(DF)}catch(e){}};
+function shDb(url){return{
+  async all(){const r=await fetch(url,{cache:'no-store'});const j=await r.json();if(!j||!j.ok)throw new Error((j&&j.error)||'bad');return j.docs||{}},
+  async set(id,body){const r=await fetch(url,{method:'POST',body:JSON.stringify({id,body})});const j=await r.json();if(!j||!j.ok)throw new Error((j&&j.error)||'bad')}}}
+async function initSheet(){
+  const url=shGet();if(!url){P.col=null;P.mode=lsOk?'local':'memory';renderStore();return}
+  P.mode='connecting';renderStore();
+  const db=shDb(url);let docs;
+  try{docs=await db.all()}catch(e){P.mode='offline';renderStore();setTimeout(initSheet,30000);return}
+  P.col={doc:id=>({set:b=>db.set(id,b),delete:()=>db.set(id,null)})};P.mode='sheet';P.err=false;
+  const meta=docs.meta;
+  const localNewer=hadLocal&&!S.fresh&&((S.updated||0)>(meta&&meta.updated||0)||dirtyFlag());
+  if(meta&&!localNewer){
+    const cards=[];Object.keys(docs).filter(k=>k.indexOf('ch_')===0).sort((a,b)=>+a.slice(3)-+b.slice(3)).forEach(k=>{(docs[k].cards||[]).forEach(c=>cards.push(c))});
+    S=normalizeState(JSON.parse(JSON.stringify({v:1,created:meta.created,updated:meta.updated,settings:meta.settings,sets:meta.sets,daily:meta.daily,sessions:(docs.sessions&&docs.sessions.list)||[],cards})));
+    lsSave();setDirty(0);if(!T)render();
+  }else{
+    touchAll(Object.keys(docs).filter(k=>k.indexOf('ch_')===0).map(k=>+k.slice(3)));flush();
+  }
+  renderStore();
+}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&P.dirty.size&&P.col){clearTimeout(P.t);flush()}});
+function renderStore(){const el=$('#store');if(!el)return;const m=P.mode,ok=m==='sheet'&&!P.dirty.size&&!P.err;el.className='store'+(ok?' ok':'');el.querySelector('span').textContent=m==='sheet'?(ok?'Збережено в таблиці':P.err?'Таблиця недоступна — збережу пізніше':'Синхронізую…'):m==='connecting'?'Підключаюся до таблиці…':m==='offline'?'Таблиця недоступна — дані на пристрої':lsOk?'Тільки на пристрої — підключи таблицю':'Тільки в памʼяті — зроби експорт'}
+
+/* ---------- shared library ---------- */
+const L={db:null,user:null,me:null,owner:false,canWrite:null,sets:new Map(),cards:new Map(),setsReady:false,cardsReady:false,setsDef:false,cardsDef:false,trunc:false,q:[],qBusy:false,seenS:new Set(),seenC:new Set()};
+const pend=p=>L.q.some(o=>o.path===p);
+const LF=['en','uk','pos','ipa','ex','exUk'];
+const libOn=()=>!!L.db&&L.setsReady;
+const libWritable=()=>libOn()&&L.canWrite!==false;
+const followed=id=>S.sets.find(s=>s.id===id&&s.lib);
+function libBody(c,setId){const prev=c.lid&&L.cards.get(c.lid);const b={set:setId,by:(prev&&prev.by)||L.me,t:(prev&&prev.t)||Date.now(),et:Date.now()};LF.forEach(f=>b[f]=String(c[f]||''));return b}
+function libPut(path,data){if(!L.db)return;L.q.push({path,data});libRun()}
+function libDel(path){if(!L.db)return;L.q.push({path,del:true});libRun()}
+async function libRun(){
+  if(L.qBusy||!L.db)return;L.qBusy=true;
+  try{while(L.q.length){const op=L.q[0];
+    try{const ref=L.db.doc(op.path);if(op.del)await ref.delete();else await ref.set(op.data);L.q.shift()}
+    catch(e){const c=e&&e.code;
+      if(c==='unavailable'||c==='resource_exhausted'){op.tries=(op.tries||0)+1;if(op.tries>4){L.q.shift();toast('Не вдалося зберегти зміну в бібліотеці. Перевір інтернет і повтори.')}else await sleep(1200*op.tries+Math.random()*800)}
+      else if(c==='invalid_argument'&&op.data&&!op.del&&L.canWrite!==true){L.q=[];L.canWrite=false;toast('Тобі не можна змінювати спільну бібліотеку. Попроси в автора доступ «Редактор».');if(!T&&!sheetOpen)render()}
+      else if(c==='quota_exceeded'){L.q.shift();toast('Спільна бібліотека заповнена. Видаліть непотрібні набори.')}
+      else{L.q.shift()}}}
+  }finally{L.qBusy=false}
+}
+function libSubscribe(){
+  const err=()=>{};
+  L.db.collection('libsets').onSnapshot(snap=>{const m=new Map();snap.docs.forEach(d=>{if(d.exists){m.set(d.id,d.data());L.seenS.add(d.id)}});L.sets=m;L.setsDef=!snap.metadata.fromCache;L.setsReady=true;libSync()},err);
+  L.db.collection('libcards').limit(1000).onSnapshot(snap=>{const m=new Map();snap.docs.forEach(d=>{if(d.exists){m.set(d.id,d.data());L.seenC.add(d.id)}});L.cards=m;L.trunc=snap.size>=1000;L.cardsDef=!snap.metadata.fromCache;L.cardsReady=true;libSync()},err);
+}
+function fromLib(lc){const o={};LF.forEach(f=>o[f]=String(lc[f]||''));o.set=lc.set;return o}
+function libSync(){
+  if(!L.setsReady||!L.cardsReady)return;
+  renderStore();
+  let changed=false;const chs=new Set(),added={},orphan=[];
+  if(L.setsDef){S.sets.forEach(s=>{if(s.lib&&!L.sets.has(s.id)&&L.seenS.has(s.id)&&!pend('libsets/'+s.id)){s.lib=false;S.cards.forEach(c=>{if(c.set===s.id&&c.lid){delete c.lid;chs.add(c.ch)}});orphan.push(s.name);changed=true}})}
+  S.sets.forEach(s=>{if(s.lib){const ls=L.sets.get(s.id);if(ls&&ls.name&&ls.name!==s.name){s.name=ls.name;changed=true}}});
+  const byLid=new Map();S.cards.forEach(c=>{if(c.lid)byLid.set(c.lid,c)});
+  const fresh=[];const now=Date.now();
+  L.cards.forEach((lc,lid)=>{const pc=byLid.get(lid);
+    if(pc){let d=false;LF.forEach(f=>{const v=String(lc[f]||'');if(pc[f]!==v){pc[f]=v;d=true}});if(lc.set!==pc.set&&followed(lc.set)){pc.set=lc.set;d=true}if(d){chs.add(pc.ch);changed=true}}
+    else{const s=followed(lc.set);if(s&&!(s.skip||[]).includes(lid)&&lc.en&&lc.uk){const c=makeCard(fromLib(lc),now+fresh.length);c.lid=lid;fresh.push(c);added[s.name]=(added[s.name]||0)+1}}
+  });
+  if(fresh.length){assignChunks(fresh,S.cards);S.cards.push(...fresh);fresh.forEach(c=>chs.add(c.ch));changed=true}
+  if(L.cardsDef&&L.setsDef&&!L.trunc){const before=S.cards.length;S.cards=S.cards.filter(c=>{if(c.lid&&!L.cards.has(c.lid)&&L.seenC.has(c.lid)&&!pend('libcards/'+c.lid)&&L.sets.has(c.set)){chs.add(c.ch);return false}return true});if(S.cards.length!==before)changed=true}
+  if(L.owner&&!S.libMigrated&&L.setsDef&&L.cardsDef&&libWritable()){S.libMigrated=true;S.sets.filter(s=>!s.lib&&S.cards.some(c=>c.set===s.id)).map(s=>s.id).forEach(id=>shareSet(id,true));changed=true}
+  if(changed){chs.forEach(n=>P.dirty.add('ch:'+n));touch('meta')}
+  orphan.forEach(n=>toast('Набір «'+n+'» видалили з бібліотеки. Твої картки з нього лишились у тебе.'));
+  Object.keys(added).forEach(n=>toast('Нові слова в наборі «'+n+'»: +'+added[n]));
+  if(T)return;
+  if(!sheetOpen)render();else{renderNav();if(sheetKind==='lib'&&LV.id)renderLibSheet()}
+}
+function shareSet(id,quiet){
+  const s=S.sets.find(x=>x.id===id);if(!s||s.lib||!libWritable())return;
+  const nid='L'+uid();libPut('libsets/'+nid,{name:s.name,by:L.me,t:Date.now()});
+  const chs=new Set();S.cards.filter(c=>c.set===id).forEach(c=>{c.lid=c.lid||('c'+uid());c.set=nid;libPut('libcards/'+c.lid,libBody(c,nid));chs.add(c.ch)});
+  s.id=nid;s.lib=true;s.skip=[];chs.forEach(n=>P.dirty.add('ch:'+n));touch('meta');
+  if(!quiet){render();toast('Набір «'+s.name+'» тепер у спільній бібліотеці')}
+}
+function followSet(id){
+  const ls=L.sets.get(id);if(!ls||S.sets.some(s=>s.id===id))return;
+  S.sets.push({id,name:ls.name,lib:true,skip:[]});const now=Date.now(),fresh=[];
+  L.cards.forEach((lc,lid)=>{if(lc.set===id&&lc.en&&lc.uk){const c=makeCard(fromLib(lc),now+fresh.length);c.lid=lid;fresh.push(c)}});
+  assignChunks(fresh,S.cards);S.cards.push(...fresh);fresh.forEach(c=>P.dirty.add('ch:'+c.ch));touch('meta');
+  if(sheetOpen)closeSheet();render();toast('Додано «'+ls.name+'»: '+fresh.length+' '+plural(fresh.length,'картка','картки','карток')+' в навчання');
+}
+function unfollowSet(id,confirmed){
+  const s=S.sets.find(x=>x.id===id);if(!s)return;const n=S.cards.filter(c=>c.set===id).length;
+  if(!confirmed){openSheet(sheetHead('Прибрати «'+esc(s.name)+'» з моїх?')+'<p style="margin:0">'+n+' '+plural(n,'картка','картки','карток')+' і твій прогрес по них зникнуть у тебе. У спільній бібліотеці набір лишиться — його можна додати знову.</p><div class="sheet-foot"><button class="btn btn-line" data-act="closeSheet">Скасувати</button><button class="btn btn-danger" data-act="unfollowYes" data-id="'+id+'">Прибрати</button></div>','confirm');return}
+  removeSetLocal(id);closeSheet();render();toast('Набір прибрано з твого навчання');
+}
+function removeSetLocal(id){S.sets=S.sets.filter(x=>x.id!==id);const chs=new Set();S.cards=S.cards.filter(c=>{if(c.set===id){chs.add(c.ch);return false}return true});chs.forEach(n=>P.dirty.add('ch:'+n));touch('meta')}
+function libDeleteSet(id,confirmed){
+  const ls=L.sets.get(id);const nm=ls?ls.name:(S.sets.find(x=>x.id===id)||{}).name||'';
+  const n=[...L.cards.values()].filter(c=>c.set===id).length;
+  if(!confirmed){openSheet(sheetHead('Видалити «'+esc(nm)+'» для всіх?')+'<p style="margin:0">Набір і '+n+' '+plural(n,'слово','слова','слів')+' зникнуть зі спільної бібліотеки. Ті, хто вже вчить ці слова, збережуть свої картки.</p><div class="sheet-foot"><button class="btn btn-line" data-act="closeSheet">Скасувати</button><button class="btn btn-danger" data-act="libDelSetYes" data-id="'+id+'">Видалити для всіх</button></div>','confirm');return}
+  if(S.sets.some(x=>x.id===id))removeSetLocal(id);
+  libDel('libsets/'+id);L.cards.forEach((c,lid)=>{if(c.set===id)libDel('libcards/'+lid)});
+  closeSheet();render();toast('Набір «'+nm+'» видалено для всіх');
+}
+function newLibCount(){if(!libOn())return 0;let n=0;L.sets.forEach((s,id)=>{if(!followed(id)&&s.by!==L.me&&(s.t||0)>(S.libSeen||0))n++});return n}
+function fillNames(root){if(!L.user)return;const els=$$('[data-uid]',root||document);const ids=[...new Set(els.map(e=>e.dataset.uid).filter(Boolean))];if(!ids.length)return;
+  L.user.profiles(ids).then(ps=>{els.forEach(e=>{const p=ps[e.dataset.uid];e.textContent=p?(p.isMe?'ти':(p.name||'учасник')):'учасник'})}).catch(()=>{})}
+function author(uidv){return '<span data-uid="'+esc(uidv||'')+'">'+(uidv&&uidv===L.me?'ти':'…')+'</span>'}
+
+/* ---------- SRS (SM-2 with learning steps) ---------- */
+const LSTEPS=[1,10];
+function schedule(c,g,now){
+  const tk=dayKey(now);const r={st:c.st,ef:c.ef,ivl:c.ivl,step:c.step,due:c.due,lapses:c.lapses,reps:c.reps+1};
+  const toDay=n=>{r.ivl=Math.min(3650,Math.max(1,Math.round(n)));r.due=dayStart(tk,r.ivl);r.st='review';r.step=0};
+  if(c.st==='new'||c.st==='learn'){
+    r.st='learn';
+    if(g===1){r.step=0;r.due=now+LSTEPS[0]*MIN}
+    else if(g===2){r.due=now+(c.step===0?6:LSTEPS[Math.min(c.step,LSTEPS.length-1)])*MIN}
+    else if(g===3){if(c.st==='learn'&&c.step+1<LSTEPS.length){r.step=c.step+1;r.due=now+LSTEPS[r.step]*MIN}else if(c.st==='new'){r.step=1;r.due=now+LSTEPS[1]*MIN}else toDay(1)}
+    else toDay(4);
+  }else if(c.st==='review'){
+    if(g===1){r.lapses++;r.ef=Math.max(1.3,c.ef-0.2);r.st='relearn';r.step=0;r.ivl=Math.max(1,Math.round(c.ivl*0.5));r.due=now+10*MIN}
+    else if(g===2){r.ef=Math.max(1.3,c.ef-0.15);toDay(Math.max(c.ivl+1,c.ivl*1.2))}
+    else if(g===3){toDay(Math.max(c.ivl+1,c.ivl*c.ef))}
+    else{r.ef=c.ef+0.15;toDay(Math.max(c.ivl+2,c.ivl*c.ef*1.3))}
+  }else{ /* relearn */
+    if(g<=2){r.due=now+10*MIN}
+    else if(g===3)toDay(c.ivl||1);
+    else toDay((c.ivl||1)+1);
+  }
+  return r;
+}
+function ivlLabel(c,g,now){const r=schedule(c,g,now);if(r.st==='review'){const d=r.ivl;if(d<30)return d+' д';if(d<365)return String(Math.round(d/3)/10).replace('.',',')+' міс';return String(Math.round(d/36.5)/10).replace('.',',')+' р'}const m=Math.max(1,Math.round((r.due-now)/MIN));return m<60?m+' хв':Math.round(m/60)+' год'}
+function status(c){if(c.st==='new')return'new';if(c.hard)return'hard';if(c.st==='review'&&c.ivl>=21)return'learned';return'learning'}
+const STL={new:'Нове',learning:'Вчу',learned:'Вивчено',hard:'Важке'};
+function isSched(c,now){if(c.st==='new')return (dd().new||0)<S.settings.newPerDay;if(c.st==='review')return c.due<nextDay();return c.due<=now+20*MIN}
+function countLearned(){return S.cards.filter(c=>status(c)==='learned').length}
+function todayQueue(){
+  const now=Date.now(),nd=nextDay(),d=S.daily[today()]||{};const learn=[],rev=[],nw=[];
+  for(const c of S.cards){if(c.st==='new')nw.push(c);else if(c.st==='review'){if(c.due<nd)rev.push(c)}else if(c.due<=now+20*MIN)learn.push(c)}
+  learn.sort((a,b)=>a.due-b.due);rev.sort((a,b)=>((b.hard?1:0)-(a.hard?1:0))||(a.due-b.due));nw.sort((a,b)=>a.created-b.created);
+  const paused=rev.length>40;const newLeft=paused?0:Math.max(0,S.settings.newPerDay-(d.new||0));
+  const revAvail=Math.min(rev.length,Math.max(0,S.settings.reviewCap-(d.rev||0)));
+  return{learn,rev,revAvail,newCards:nw.slice(0,newLeft),newLeft,paused,totalNew:nw.length,backlog:rev.length};
+}
+function srsOrder(q){const out=q.learn.slice();const rv=q.rev.slice(0,q.revAvail),nw=q.newCards.slice();let i=0;while(rv.length||nw.length){if(rv.length&&(i%4!==3||!nw.length))out.push(rv.shift());else out.push(nw.shift());i++}return out}
+function streak(){let k=today();if(!(S.daily[k]&&S.daily[k].tot))k=addDays(k,-1);let n=0;while(S.daily[k]&&S.daily[k].tot){n++;k=addDays(k,-1)}return n}
+
+/* ---------- speech ---------- */
+let voices=[];
+function loadVoices(){if(!('speechSynthesis' in window))return;try{voices=speechSynthesis.getVoices().filter(v=>/^en[-_]/i.test(v.lang))}catch(e){voices=[]}}
+if('speechSynthesis' in window){loadVoices();try{speechSynthesis.onvoiceschanged=loadVoices}catch(e){}}
+function pickVoice(){if(!voices.length)loadVoices();return voices.find(v=>v.voiceURI===S.settings.voice)||voices.find(v=>/en[-_]US/i.test(v.lang)&&/samantha|google|aria|jenny|natural/i.test(v.name))||voices.find(v=>/en[-_]US/i.test(v.lang))||voices[0]}
+function speak(t){if(!t)return;if(!('speechSynthesis' in window)){toast('Озвучка недоступна в цьому браузері.');return}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(String(t).replace(/…/g,''));u.lang='en-US';const v=pickVoice();if(v)u.voice=v;u.rate=S.settings.rate||0.95;speechSynthesis.speak(u)}catch(e){}}
+
+/* ---------- capabilities ---------- */
+/* ---------- toast ---------- */
+function toast(msg,o){o=o||{};const el=document.createElement('div');el.className='toast'+(o.action?'':' plain');el.innerHTML='<span>'+esc(msg)+'</span>'+(o.action?'<button type="button">'+esc(o.action)+'</button>':'');$('#toasts').appendChild(el);let done=false;const kill=()=>{if(done)return;done=true;el.remove()};if(o.action)el.querySelector('button').onclick=()=>{kill();o.onAction&&o.onAction()};setTimeout(kill,o.ms||(o.action?6000:3200))}
+
+/* ---------- navigation ---------- */
+const NAV=[['today','Сьогодні','home'],['train','Тренування','cards'],['words','Слова','list'],['sets','Набори','folder'],['progress','Прогрес','chart'],['history','Історія','clock']];
+let view='today';try{const v=localStorage.getItem(LS+':view');if(v&&NAV.some(n=>n[0]===v))view=v}catch(e){}
+function go(v){view=v;try{localStorage.setItem(LS+':view',v)}catch(e){}render();$('#main').scrollTop=0}
+function renderNav(){
+  const q=todayQueue(),due=q.learn.length+q.revAvail+q.newCards.length,nl=newLibCount();
+  $('#nav').innerHTML=NAV.map((n,i)=>'<button data-act="go" data-v="'+n[0]+'"'+(view===n[0]?' aria-current="page"':'')+'>'+ic(n[2])+n[1]+(n[0]==='today'&&due?'<span class="badge" aria-label="'+due+' карток">'+due+'</span>':'')+(n[0]==='sets'&&nl?'<span class="badge new" aria-label="'+nl+' нових наборів">'+nl+'</span>':'')+'<span class="k">'+(i+1)+'</span></button>').join('');
+  const more=['sets','progress','history'].includes(view);
+  $('#tabbar').innerHTML=
+    '<button class="tab" data-act="go" data-v="today"'+(view==='today'?' aria-current="page"':'')+'>'+ic('home',22)+'Сьогодні</button>'+
+    '<button class="tab" data-act="go" data-v="train"'+(view==='train'?' aria-current="page"':'')+'>'+ic('cards',22)+'Тренування</button>'+
+    '<button class="tab tab-plus" data-act="add" aria-label="Додати слова">'+ic('plus',26,2.6)+'</button>'+
+    '<button class="tab" data-act="go" data-v="words"'+(view==='words'?' aria-current="page"':'')+'>'+ic('list',22)+'Слова</button>'+
+    '<button class="tab" data-act="more"'+(more?' aria-current="page"':'')+' style="position:relative">'+ic('more',22,2.6)+'Ще'+(nl?'<i class="tdot" aria-label="Нові набори"></i>':'')+'</button>';
+}
+function render(){renderNav();$('#page').innerHTML=VIEWS[view]();fillNames($('#page'));if(view==='sets'&&libOn()){const nowT=Date.now();if((S.libSeen||0)<nowT-5000&&newLibCount()){setTimeout(()=>{S.libSeen=nowT;touch('meta');renderNav()},4000)}}if(view==='progress'){const s=$('.scrollx');if(s)s.scrollLeft=s.scrollWidth}}
+$('#gearIc').innerHTML=ic('gear');
+
+/* ---------- views ---------- */
+const VIEWS={};
+function hdr(eb,title,actions){return '<div class="head"><div><div class="eyebrow">'+eb+'</div><h1 class="h1" style="margin-top:6px">'+title+'</h1></div>'+(actions?'<div class="actions">'+actions+'</div>':'')+'</div>'}
+function ring(p){const r=58,C=2*Math.PI*r;return '<svg width="150" height="150" viewBox="0 0 150 150" aria-hidden="true"><circle cx="75" cy="75" r="'+r+'" fill="none" stroke="var(--ring-bg)" stroke-width="13"/><circle cx="75" cy="75" r="'+r+'" fill="none" stroke="var(--accent)" stroke-width="13" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-Math.min(1,p))).toFixed(1)+'"/></svg>'}
+
+VIEWS.today=function(){
+  const now=new Date(),q=todayQueue(),d=S.daily[today()]||{};
+  const rev=q.learn.length+q.revAvail,nw=q.newCards.length,left=rev+nw,done=d.tot||0;
+  const p=done+left?done/(done+left):0;const stk=streak(),sess=d.sess||0;
+  const size=Math.min(S.settings.sessionSize,left),mins=Math.max(1,Math.round(size*20/60));
+  const learned=countLearned(),inStudy=S.cards.filter(c=>c.st!=='new').length;
+  let main;
+  if(!S.cards.length){
+    main='<div class="dk"><div class="eyebrow">Сьогодні</div><h2 class="h2" style="margin-top:10px">Колода порожня</h2><p class="muted">Встав перші слова — по одному або парою «word — переклад» на рядок. Або візьми готовий набір зі спільної бібліотеки.</p><div class="row"><button class="btn btn-gold btn-lg" data-act="add">'+ic('plus',20,2.4)+'Додати слова</button>'+(L.db?'<button class="btn btn-line btn-lg" data-act="go" data-v="sets">Бібліотека</button>':'')+'</div></div>';
+  }else{
+    const tomorrow=S.cards.filter(c=>c.st!=='new'&&c.due>=nextDay()&&c.due<dayStart(today(),2)).length;
+    main='<section class="dk hero" id="hero" aria-label="Сьогодні">'+
+      '<div><div class="eyebrow">Сьогодні · '+WD[now.getDay()]+', '+now.getDate()+' '+MON[now.getMonth()]+'</div>'+
+      (left?'<div class="hero-nums"><div><span class="bignum" id="heroRev">'+rev+'</span><span class="bignum-l">на повторення</span></div><div><span class="bignum" id="heroNew">'+nw+'</span><span class="bignum-l">'+plural(nw,'нова','нові','нових')+'</span></div></div>'+
+        '<div class="hero-cta"><button class="btn btn-gold btn-lg" data-act="start" data-mode="mixed" data-scope="today">'+ic('play',18,2.2)+'Почати</button><span class="muted">'+size+' '+plural(size,'картка','картки','карток')+' · ~'+mins+' хв</span></div>'
+       :'<h2 class="h2" style="margin-top:14px">На сьогодні все</h2><p class="muted" style="margin:6px 0 0">Завтра чекає '+tomorrow+' '+plural(tomorrow,'повторення','повторення','повторень')+'. <span id="heroNew" hidden>0</span></p><div class="hero-cta"><button class="btn btn-gold" data-act="start" data-mode="flip" data-scope="all">Вільна практика</button></div>')+
+      (q.paused?'<p class="note olive">Накопичилось '+q.backlog+' повторень. Нові слова на паузі, поки їх не стане менше 40. Роби частинами по '+S.settings.sessionSize+' — сьогодні максимум '+S.settings.reviewCap+'.</p>':'')+
+      '<div class="hero-meta"><span>'+ic('flame',16)+'<b>'+stk+'</b> '+plural(stk,'день','дні','днів')+' поспіль</span><span>Сесії сьогодні <span class="dots" aria-label="'+sess+' з 3">'+[0,1,2].map(i=>'<i class="'+(i<sess?'on':'')+'"></i>').join('')+'</span></span><span>У колоді <b id="deckN">'+S.cards.length+'</b></span></div></div>'+
+      '<div class="ring" aria-label="Денна норма: '+Math.round(p*100)+'%">'+ring(p)+'<div class="rv-t"><div><b>'+Math.round(p*100)+'%</b><small>денна норма</small></div></div></div>'+
+    '</section>';
+  }
+  const g=S.settings.goal,gp=Math.min(1,inStudy/g);
+  const pool=S.cards.filter(c=>c.st!=='new'&&c.pos!=='речення');const pool2=pool.length?pool:S.cards.filter(c=>c.pos!=='речення');
+  let wod='';if(pool2.length){const seed=[...today()].reduce((a,ch)=>a+ch.charCodeAt(0),0);const c=pool2[seed%pool2.length];
+    wod='<div class="card"><div class="eyebrow">Речення дня</div><div class="row" style="margin-top:6px"><div class="word-day">'+esc(c.en)+'</div><button class="ibtn" data-act="say" data-t="'+esc(c.en)+'" aria-label="Озвучити">'+ic('speaker',18)+'</button></div><p class="muted" style="margin:4px 0 0">Склади вголос одне речення про свій день з цим словом. Можеш написати його мені в чат — поправлю.</p></div>'}
+  const nl=newLibCount();
+  return hdr('Слово за словом','Привіт, <span class="hl">'+esc(S.settings.name)+'</span>')+main+
+    (nl?'<div class="card row" style="justify-content:space-between"><span><b>'+nl+' '+plural(nl,'новий набір','нові набори','нових наборів')+'</b> <span class="muted">у спільній бібліотеці</span></span><button class="btn btn-line btn-sm" data-act="go" data-v="sets">Переглянути</button></div>':'')+
+    '<div class="grid3">'+
+      '<div class="card"><div class="eyebrow">Ціль</div><div class="row" style="margin:8px 0 10px;justify-content:space-between"><span><b class="num" style="font-size:28px">'+inStudy+'</b> <span class="muted">/ '+g+' слів</span></span><span class="muted">до '+fmtD(S.settings.goalDate)+'</span></div><div class="bar"><i style="width:'+(gp*100).toFixed(1)+'%"></i></div><p class="muted" style="margin:10px 0 0;font-size:13.5px">Вивчено (інтервал 21+ д): '+learned+'</p></div>'+
+      wod+
+      '<div class="card"><div class="eyebrow">Швидке тренування</div><div class="chips" style="margin-top:10px">'+
+        [['lesson','Урок'],['mixed','Картки + вибір'],['flip','Картки'],['choice','4 варіанти'],['type','Напиши'],['listen','Слухай']].map(m=>'<button class="chip" data-act="start" data-mode="'+m[0]+'" data-scope="today">'+m[1]+'</button>').join('')+
+      '</div><p class="muted" style="margin:10px 0 0;font-size:13.5px">План: 3 сесії по ~5 хв — ранок нові, день і вечір повторення.</p></div>'+
+    '</div>';
+};
+
+VIEWS.train=function(){
+  const dir=S.settings.dir,q=todayQueue(),n=q.learn.length+q.revAvail+q.newCards.length;
+  const opts='<option value="today">Сьогоднішня черга ('+n+')</option><option value="all">Усі слова (вільна практика)</option><option value="hard">Важкі слова ('+S.cards.filter(c=>c.hard).length+')</option>'+S.sets.map(s=>'<option value="'+s.id+'">Набір: '+esc(s.name)+'</option>').join('');
+  const modes=[['lesson','book','Урок','Шість вправ на одних словах: Learn, Match, Fill in, Choose, Speak, Write. Обери набір у полі «Що тренуємо».','feat','t1'],['mixed','mix','Картки + вибір','Чергує картки з перевертанням і вибір з 4 варіантів в одній вправі. Нові слова спершу показую карткою.','','t1'],['flip','flip','Картки','Перевертай і оцінюй, наскільки легко згадав.','','t4'],['choice','grid','Обери з 4 варіантів','Слово англійською чи українською — обираєш правильний переклад.','','t2'],['type','type','Напиши переклад','Вводиш відповідь сам — найкраще для памʼяті.','','t5'],['listen','ear','Слухай і впізнавай','Чуєш слово — обираєш переклад. Тренує слух.','','t3']];
+  return hdr('Тренування','Обери <span class="hl">режим</span>')+
+    '<div class="card"><div class="row" style="gap:16px;align-items:flex-end">'+
+      '<div class="field" style="flex:1 1 240px"><span>Що тренуємо</span><select class="sel" id="scope">'+opts+'</select></div>'+
+      '<div class="field"><span>Напрямок</span><div class="chips seg-ctl" role="group" aria-label="Напрямок">'+[['en','EN → UA'],['uk','UA → EN'],['mix','Змішано']].map(x=>'<button class="chip" data-act="dir" data-v="'+x[0]+'" aria-pressed="'+(dir===x[0])+'">'+x[1]+'</button>').join('')+'</div></div>'+
+    '</div></div>'+
+    '<div class="grid2">'+modes.map(m=>'<div class="dk mode '+m[4]+'"><div class="mi '+m[5]+'">'+ic(m[1],24)+'</div><h2 class="h2">'+m[2]+'</h2><p>'+m[3]+'</p><div><button class="btn btn-gold" data-act="start" data-mode="'+m[0]+'">Почати</button></div></div>').join('')+'</div>'+
+    '<p class="hint">Клавіші: пробіл — перевернути, 1–4 — варіант або оцінка, Enter — перевірити / далі, P — озвучити, Esc — вийти.</p>';
+};
+
+const W={q:'',set:'all',st:'all'};
+function wordRows(){
+  const q=W.q.trim().toLowerCase();
+  const list=S.cards.filter(c=>(W.set==='all'||(c.set||'')===W.set)&&(W.st==='all'||status(c)===W.st)&&(!q||c.en.toLowerCase().includes(q)||c.uk.toLowerCase().includes(q)||(c.tags||[]).join(' ').toLowerCase().includes(q))).sort((a,b)=>b.created-a.created);
+  if(!S.cards.length)return '<div class="empty"><h2 class="h2">Тут поки порожньо</h2><p>Натисни «Додати слова» і встав список — переклад, приклад і транскрипцію я додам сам.</p><button class="btn btn-gold" data-act="add">Додати слова</button></div>';
+  if(!list.length)return '<div class="empty"><p>Нічого не знайшлося. Зміни пошук або фільтр.</p></div>';
+  return '<div class="list">'+list.map(c=>{const s=status(c);return '<div class="wrow"><button class="wrow-main" data-act="edit" data-id="'+c.id+'" aria-label="Редагувати '+esc(c.en)+'"><div class="wtxt"><b>'+esc(c.en)+'</b><span>'+esc(c.uk||'— без перекладу')+'</span></div><div class="wpills">'+(c.auto?'<span class="pill tag-auto">АВТО</span>':'')+(!c.uk?'<span class="pill tag-need">Додай переклад</span>':'')+'<span class="pill st-'+s+'">'+STL[s]+'</span></div></button><button class="ibtn" data-act="say" data-t="'+esc(c.en)+'" aria-label="Озвучити '+esc(c.en)+'">'+ic('speaker',18)+'</button></div>'}).join('')+'</div>';
+}
+VIEWS.words=function(){
+  const cnt={all:S.cards.length,new:0,learning:0,learned:0,hard:0};S.cards.forEach(c=>cnt[status(c)]++);
+  return hdr('Слова','Твої <span class="hl">слова</span>','<button class="btn btn-gold" data-act="add">'+ic('plus',18,2.4)+'Додати</button>')+
+    '<div class="row"><label class="search"><span class="sr">Пошук</span>'+ic('search',18)+'<input class="inp" id="wq" type="search" placeholder="Пошук англійською чи українською" value="'+esc(W.q)+'" autocomplete="off"></label>'+
+    '<select class="sel" id="wset" style="flex:0 1 220px" aria-label="Набір"><option value="all">Усі набори</option>'+S.sets.map(s=>'<option value="'+s.id+'"'+(W.set===s.id?' selected':'')+'>'+esc(s.name)+'</option>').join('')+'<option value=""'+(W.set===''?' selected':'')+'>Без набору</option></select></div>'+
+    '<div class="chips" role="group" aria-label="Статус">'+[['all','Усі'],['new','Нове'],['learning','Вчу'],['learned','Вивчено'],['hard','Важке']].map(x=>'<button class="chip" data-act="wst" data-v="'+x[0]+'" aria-pressed="'+(W.st===x[0])+'">'+x[1]+' <span class="n">'+cnt[x[0]]+'</span></button>').join('')+'</div>'+
+    '<div id="wlist">'+wordRows()+'</div>';
+};
+
+VIEWS.sets=function(){
+  const groups=S.sets.map(s=>({id:s.id,name:s.name,lib:!!s.lib,cards:S.cards.filter(c=>c.set===s.id)}));
+  const none=S.cards.filter(c=>!c.set||!S.sets.some(s=>s.id===c.set));if(none.length)groups.push({id:'',name:'Без набору',cards:none,virtual:true});
+  const mine=groups.length?'<div class="grid3">'+groups.map(g=>{const n=g.cards.length,cn={new:0,learning:0,learned:0,hard:0};g.cards.forEach(c=>cn[status(c)]++);const pc=n?Math.round(cn.learned/n*100):0;const ls=g.lib?L.sets.get(g.id):null;
+      return '<div class="card setc"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><h2 class="h3" style="overflow-wrap:anywhere">'+esc(g.name)+'</h2><span class="num" style="font-size:22px">'+pc+'%</span></div>'+
+      '<div class="row" style="gap:6px">'+(g.lib?'<span class="pill share">Спільний</span>'+(ls?'<span class="lib-who">автор: '+author(ls.by)+'</span>':''):g.virtual?'':'<span class="pill own">Лише в тебе</span>')+'</div>'+
+      '<div class="seg" aria-label="Прогрес набору">'+(n?['learned','learning','hard','new'].map(k=>'<i style="width:'+(cn[k]/n*100)+'%;background:'+({learned:'var(--c1)',learning:'var(--c2)',hard:'var(--bad)',new:'transparent'})[k]+'"></i>').join(''):'')+'</div>'+
+      '<div class="meta"><span>'+n+' '+plural(n,'картка','картки','карток')+'</span><span>вивчено '+cn.learned+' · вчу '+(cn.learning+cn.hard)+' · нових '+cn.new+'</span></div>'+
+      '<div class="row"><button class="btn btn-gold btn-sm" data-act="start" data-mode="mixed" data-scope="'+g.id+'"'+(n?'':' disabled')+'>Тренувати</button>'+(g.virtual?'':'<button class="btn btn-line btn-sm" data-act="start" data-mode="lesson" data-scope="'+g.id+'"'+(n>=4?'':' disabled')+'>Урок</button>')+'<button class="btn btn-line btn-sm" data-act="setView" data-id="'+g.id+'">Слова</button>'+
+      (!g.lib&&!g.virtual&&libWritable()&&n?'<button class="btn btn-line btn-sm" data-act="share" data-id="'+g.id+'">Поділитися</button>':'')+
+      (g.virtual?'':'<span class="spacer"></span><button class="ibtn" data-act="setEdit" data-id="'+g.id+'" aria-label="Змінити набір">'+ic('pen',16)+'</button>')+'</div></div>'}).join('')+'</div>'
+    :'<div class="empty"><p>У тебе ще немає наборів. Створи свій.</p></div>';
+  let lib;
+  if(!L.db)lib='<div class="note-box">Усі набори зберігаються на цьому пристрої, а якщо підключено Google-таблицю — і в ній.</div>';
+  else if(!L.setsReady)lib='<div class="card"><span class="sk"></span></div>';
+  else{
+    const others=[...L.sets.entries()].filter(([id])=>!followed(id)).sort((a,b)=>(b[1].t||0)-(a[1].t||0));
+    lib=others.length?'<div class="grid3">'+others.map(([id,s])=>{const cs=[...L.cards.values()].filter(c=>c.set===id);const fresh=s.by!==L.me&&(s.t||0)>(S.libSeen||0);
+      return '<div class="card setc"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><h2 class="h3" style="overflow-wrap:anywhere">'+esc(s.name)+'</h2>'+(fresh?'<span class="pill fresh">Новий</span>':'')+'</div>'+
+      '<span class="lib-who">'+cs.length+' '+plural(cs.length,'слово','слова','слів')+' · автор: '+author(s.by)+'</span>'+
+      '<p class="lib-sample">'+(cs.length?esc(cs.slice(0,4).map(c=>c.en).join(', '))+(cs.length>4?'…':''):'Поки порожній')+'</p>'+
+      '<div class="row"><button class="btn btn-gold btn-sm" data-act="follow" data-id="'+id+'">Додати собі</button><button class="btn btn-line btn-sm" data-act="libOpen" data-id="'+id+'">Переглянути</button></div></div>'}).join('')+'</div>'
+      :'<div class="empty"><p>Тут зʼявляться набори, якими поділяться інші. Усі спільні набори, які є зараз, уже в тебе.</p></div>';
+    if(L.canWrite===false)lib='<div class="note-box">Ти можеш переглядати бібліотеку й додавати набори собі. Щоб додавати й змінювати слова для всіх, потрібен доступ «Редактор».</div>'+lib;
+  }
+  return hdr('Набори','Групи <span class="hl">слів</span>','<button class="btn btn-gold" data-act="setNew">'+ic('plus',18,2.4)+'Новий набір</button>')+
+    '<div class="sec-h"><h2 class="h2">Мої набори</h2><span class="hint">Те, що ти вчиш</span></div>'+mine+
+    '';
+};
+
+/* library set sheet */
+const LV={id:null};
+function openLibSet(id){LV.id=id;openSheet('','lib',true);renderLibSheet()}
+function renderLibSheet(){
+  const id=LV.id,s=L.sets.get(id);if(!s){closeSheet();return}
+  const cs=[...L.cards.entries()].filter(([,c])=>c.set===id).sort((a,b)=>(a[1].t||0)-(b[1].t||0));const fol=!!followed(id),w=libWritable();
+  setSheet(sheetHead(esc(s.name),cs.length+' '+plural(cs.length,'слово','слова','слів')+' · автор: '+author(s.by)+(fol?' · уже в тебе':''))+
+    (cs.length?'<div class="list">'+cs.map(([lid,c])=>'<div class="wrow"><button class="wrow-main" data-act="libCard" data-id="'+lid+'"'+(w?'':' disabled')+'><div class="wtxt"><b>'+esc(c.en)+'</b><span>'+esc(c.uk)+'</span></div>'+(c.by&&c.by!==s.by?'<span class="lib-who">'+author(c.by)+'</span>':'')+'</button><button class="ibtn" data-act="say" data-t="'+esc(c.en)+'" aria-label="Озвучити">'+ic('speaker',18)+'</button></div>').join('')+'</div>':'<div class="empty"><p>У наборі ще немає слів.</p></div>')+
+    '<div class="sheet-foot">'+(w?'<button class="btn btn-danger" data-act="libDelSet" data-id="'+id+'" style="margin-right:auto">Видалити для всіх</button>':'')+(fol?'<button class="btn btn-line" data-act="closeSheet">Закрити</button>':'<button class="btn btn-line" data-act="closeSheet">Закрити</button><button class="btn btn-gold" data-act="follow" data-id="'+id+'">Додати собі</button>')+'</div>');
+  fillNames($('#sheet'));
+}
+function openLibCard(lid){const c=L.cards.get(lid);if(!c)return;const back=LV.id;
+  setSheet(sheetHead('Спільне слово','Зміни побачать усі учасники')+'<div class="grid2" style="gap:12px">'+
+    '<label class="field"><span>Англійською</span><input class="inp" id="l_en" value="'+esc(c.en)+'"></label><label class="field"><span>Українською</span><input class="inp" id="l_uk" value="'+esc(c.uk)+'"></label>'+
+    '<label class="field" style="grid-column:1/-1"><span>Приклад англійською</span><input class="inp" id="l_ex" value="'+esc(c.ex)+'"></label><label class="field" style="grid-column:1/-1"><span>Переклад прикладу</span><input class="inp" id="l_exUk" value="'+esc(c.exUk)+'"></label></div>'+
+    '<div class="sheet-foot"><button class="btn btn-danger" data-act="libCardDel" data-id="'+lid+'" style="margin-right:auto">Видалити для всіх</button><button class="btn btn-line" data-act="libBack">Назад</button><button class="btn btn-gold" data-act="libCardSave" data-id="'+lid+'">Зберегти</button></div>');
+  LV.id=back;sheetKind='libcard';
+}
+function libCardSave(lid){const c=L.cards.get(lid);if(!c)return;const v=k=>(($('#l_'+k)||{}).value||'').trim();if(!v('en')||!v('uk')){toast('Заповни слово і переклад.');return}
+  const b=Object.assign({},c,{en:v('en'),uk:v('uk'),ex:v('ex'),exUk:v('exUk'),et:Date.now()});libPut('libcards/'+lid,b);L.cards.set(lid,b);sheetKind='lib';renderLibSheet();toast('Збережено для всіх')}
+function libCardDel(lid){const c=L.cards.get(lid);if(!c)return;libDel('libcards/'+lid);L.cards.delete(lid);sheetKind='lib';renderLibSheet();
+  toast('«'+c.en+'» видалено для всіх',{action:'Скасувати',onAction:()=>{libPut('libcards/'+lid,c);L.cards.set(lid,c);if(sheetKind==='lib')renderLibSheet()}})}
+
+function niceMax(v){if(v<=5)return 5;const p=Math.pow(10,Math.floor(Math.log10(v)));const n=v/p;return (n<=1?1:n<=2?2:n<=5?5:10)*p}
+VIEWS.progress=function(){
+  const tk=today(),cnt={new:0,learning:0,learned:0,hard:0};S.cards.forEach(c=>cnt[status(c)]++);
+  let tot30=0,ok30=0;for(let i=0;i<30;i++){const d=S.daily[addDays(tk,-i)];if(d){tot30+=d.tot||0;ok30+=d.ok||0}}
+  const acc=tot30?Math.round(ok30/tot30*100):null;
+  /* growth */
+  let start=tk;S.cards.forEach(c=>{const k=dayKey(c.created);if(k<start)start=k});Object.keys(S.daily).forEach(k=>{if(k<start)start=k});
+  if(start>addDays(tk,-13))start=addDays(tk,-13);
+  const days=[];for(let k=start;k<=tk;k=addDays(k,1)){days.push(k);if(days.length>400)break}
+  const created=S.cards.map(c=>dayKey(c.created)).sort();let ci=0,lv=0;const tot=[],lrn=[];
+  days.forEach(k=>{while(ci<created.length&&created[ci]<=k)ci++;tot.push(ci);if(S.daily[k]&&typeof S.daily[k].learned==='number')lv=S.daily[k].learned;lrn.push(k===tk?cnt.learned:lv)});
+  const Wd=640,H=230,L=40,R=14,Tp=14,B=28,ym=niceMax(Math.max(5,...tot)*1.08);
+  const X=i=>L+(days.length<2?0:i*(Wd-L-R)/(days.length-1)),Y=v=>Tp+(H-Tp-B)*(1-v/ym);
+  const pth=a=>a.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join('');
+  let g='';for(let i=0;i<=4;i++){const v=ym*i/4,y=Y(v);g+='<line class="gl" x1="'+L+'" x2="'+(Wd-R)+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)+'"/><text class="ax" x="'+(L-8)+'" y="'+(y+4).toFixed(1)+'" text-anchor="end">'+Math.round(v)+'</text>'}
+  const xl=[0,Math.floor((days.length-1)/2),days.length-1].map(i=>{const d=keyDate(days[i]);return '<text class="ax" x="'+X(i).toFixed(1)+'" y="'+(H-8)+'" text-anchor="'+(i===0?'start':i===days.length-1?'end':'middle')+'">'+d.getDate()+' '+MON_S[d.getMonth()]+'</text>'}).join('');
+  const area=pth(lrn)+'L'+X(days.length-1).toFixed(1)+','+Y(0).toFixed(1)+'L'+X(0).toFixed(1)+','+Y(0).toFixed(1)+'Z';
+  const growth='<svg class="chart" viewBox="0 0 '+Wd+' '+H+'" role="img" aria-label="Крива зростання: у колоді '+tot[tot.length-1]+', вивчено '+cnt.learned+'">'+g+xl+
+    '<path d="'+area+'" fill="var(--c2)" opacity=".55"/><path d="'+pth(tot)+'" fill="none" stroke="var(--c3)" stroke-width="2.5" stroke-linejoin="round"/><path d="'+pth(lrn)+'" fill="none" stroke="var(--c1)" stroke-width="3" stroke-linejoin="round"/>'+
+    '<circle cx="'+X(days.length-1).toFixed(1)+'" cy="'+Y(tot[tot.length-1]).toFixed(1)+'" r="4.5" fill="var(--c3)"/><circle cx="'+X(days.length-1).toFixed(1)+'" cy="'+Y(lrn[lrn.length-1]).toFixed(1)+'" r="4.5" fill="var(--c1)"/></svg>';
+  /* accuracy 14 days */
+  const aW=640,aH=170,aL=40,aB=26,aT=12;const ad=[];for(let i=13;i>=0;i--){const k=addDays(tk,-i),d=S.daily[k];ad.push({k,v:d&&d.tot?d.ok/d.tot:null})}
+  const bw=(aW-aL-10)/14;let ab='';for(let i=0;i<=2;i++){const y=aT+(aH-aT-aB)*(1-i/2);ab+='<line class="gl" x1="'+aL+'" x2="'+(aW-10)+'" y1="'+y+'" y2="'+y+'"/><text class="ax" x="'+(aL-8)+'" y="'+(y+4)+'" text-anchor="end">'+(i*50)+'%</text>'}
+  ad.forEach((o,i)=>{const x=aL+i*bw+bw*0.18,w=bw*0.64;if(o.v!=null){const h=(aH-aT-aB)*o.v;ab+='<rect x="'+x.toFixed(1)+'" y="'+(aH-aB-h).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+Math.max(2,h).toFixed(1)+'" rx="5" fill="'+(i===13?'var(--c1)':'var(--c3)')+'"><title>'+fmtD(o.k)+': '+Math.round(o.v*100)+'%</title></rect>'}else ab+='<rect x="'+x.toFixed(1)+'" y="'+(aH-aB-3)+'" width="'+w.toFixed(1)+'" height="3" rx="1.5" fill="var(--grid)"/>';if(i%2===1||i===13){const d=keyDate(o.k);ab+='<text class="ax" x="'+(x+w/2).toFixed(1)+'" y="'+(aH-8)+'" text-anchor="middle">'+d.getDate()+'</text>'}});
+  const accChart='<svg class="chart" viewBox="0 0 '+aW+' '+aH+'" role="img" aria-label="Точність за 14 днів">'+ab+'</svg>';
+  /* heatmap 26 weeks */
+  const tdj=keyDate(tk).getDay(),mondayOff=(tdj+6)%7;const hs=addDays(tk,-(mondayOff+7*25));let cells='';
+  for(let i=0;i<26*7;i++){const k=addDays(hs,i);if(k>tk){cells+='<i class="fut"></i>';continue}const d=S.daily[k],n=d?d.tot||0:0;const l=n===0?0:n<=10?1:n<=25?2:n<=50?3:4;cells+='<i class="'+(l?'l'+l:'')+'" title="'+fmtD(k)+': '+n+' '+plural(n,'відповідь','відповіді','відповідей')+'"></i>'}
+  const heat='<div class="scrollx"><div class="hm-wrap"><div class="hm-days"><span>Пн</span><span></span><span>Ср</span><span></span><span>Пт</span><span></span><span>Нд</span></div><div class="hm" role="img" aria-label="Активність за пів року">'+cells+'</div></div></div><div class="legend" style="margin-top:10px"><span>Менше</span>'+['var(--heat-0)','var(--h1)','var(--h2)','var(--h3)','var(--h4)'].map(c=>'<span><i style="background:'+c+'"></i></span>').join('')+'<span>Більше</span></div>';
+  /* hardest */
+  const hard=S.cards.map(c=>({c,s:c.lapses*2+c.log.filter(l=>l.g===1).length+(c.hard?3:0),e:c.log.filter(l=>l.g===1).length})).filter(o=>o.s>0).sort((a,b)=>b.s-a.s).slice(0,10);
+  const hardHtml=hard.length?hard.map((o,i)=>'<div class="hard-row"><span class="rk">'+(i+1)+'</span><div class="wtxt"><b>'+esc(o.c.en)+'</b><span>'+esc(o.c.uk)+'</span></div><span class="muted" style="font-size:13px;white-space:nowrap">'+o.e+' '+plural(o.e,'помилка','помилки','помилок')+'</span></div>').join(''):'<p class="muted">Поки жодного важкого слова. Вони зʼявляться тут після помилок у тренуваннях.</p>';
+  /* forecast */
+  const inStudy=S.cards.filter(c=>c.st!=='new').length,goal=S.settings.goal;let n14=0;for(let i=0;i<14;i++){const d=S.daily[addDays(tk,-i)];if(d)n14+=d.new||0}
+  let pace=n14/14,byPlan=false;if(pace<0.5){pace=S.settings.newPerDay;byPlan=true}
+  const need=Math.max(0,goal-inStudy),dn=Math.ceil(need/pace),eta=addDays(tk,dn),late=eta>S.settings.goalDate;
+  const daysLeft=Math.max(1,Math.round((dayStart(S.settings.goalDate)-dayStart(tk))/DAY)),reqPace=need/daysLeft;
+  const newInDeck=cnt.new;
+  const fc='<p style="margin:0;font-size:15px">'+(need===0?'Ціль досягнута — <b>'+goal+'</b> слів уже в навчанні.':(byPlan?'За планом ('+S.settings.newPerDay+' нових на день)':'Твій темп — <b>'+pace.toFixed(1).replace('.',',')+'</b> нових на день')+'. З таким темпом <b>'+goal+'</b> слів будуть у навчанні до <b>'+fmtD(eta)+'</b> — '+(late?'на '+Math.round((dayStart(eta)-dayStart(S.settings.goalDate))/DAY)+' дн. пізніше цілі. Щоб устигнути, треба ~'+reqPace.toFixed(1).replace('.',',')+' на день.':'встигаєш до цілі ('+fmtD(S.settings.goalDate)+').'))+'</p>'+
+    (need?'<p class="muted" style="margin:8px 0 0;font-size:13.5px">Усі вони стануть «вивченими» (21+ день) приблизно до '+fmtD(addDays(eta,25))+'.'+(newInDeck<pace*7?' У колоді лише '+newInDeck+' нових карток — додай ще, щоб не зупинятися.':'')+'</p>':'');
+  return hdr('Прогрес','Як іде <span class="hl">навчання</span>')+
+    '<div class="grid3" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr))">'+
+      '<div class="dk stat"><span class="eyebrow">Вивчено</span><span class="v">'+cnt.learned+'</span><span class="muted">інтервал 21+ день</span></div>'+
+      '<div class="card stat"><span class="eyebrow">Вчу</span><span class="v">'+(cnt.learning+cnt.hard)+'</span><span class="muted">з них важких '+cnt.hard+'</span></div>'+
+      '<div class="card stat"><span class="eyebrow">Нових</span><span class="v">'+cnt.new+'</span><span class="muted">чекають у колоді</span></div>'+
+      '<div class="card stat"><span class="eyebrow">Точність</span><span class="v">'+(acc==null?'—':acc+'%')+'</span><span class="muted">за 30 днів</span></div>'+
+    '</div>'+
+    '<div class="dk"><div class="eyebrow">Прогноз цілі</div><div style="margin-top:10px">'+fc+'</div></div>'+
+    '<div class="card"><div class="row" style="justify-content:space-between;margin-bottom:8px"><h2 class="h3">Крива зростання</h2><div class="legend"><span><i style="background:var(--c3)"></i>У колоді</span><span><i style="background:var(--c1)"></i>Вивчено</span></div></div>'+growth+'</div>'+
+    '<div class="grid2">'+
+      '<div class="card"><h2 class="h3" style="margin-bottom:12px">Активність</h2>'+heat+'</div>'+
+      '<div class="card"><h2 class="h3" style="margin-bottom:8px">Точність за 14 днів</h2>'+accChart+'</div>'+
+    '</div>'+
+    '<div class="card"><h2 class="h3" style="margin-bottom:4px">Топ-10 найважчих</h2>'+hardHtml+'</div>';
+};
+
+const H={tab:'sessions',q:''};
+const MODE_L={lesson:'Урок',mixed:'Картки + вибір',flip:'Картки',type:'Напиши переклад',choice:'Обери з 4',listen:'Слухай і впізнавай'};
+const GL={1:'Не знаю',2:'Важко',3:'Добре',4:'Легко'};
+function histWords(){
+  const q=H.q.trim().toLowerCase();const list=S.cards.filter(c=>c.log.length&&(!q||c.en.toLowerCase().includes(q)||c.uk.toLowerCase().includes(q))).sort((a,b)=>b.log[b.log.length-1].t-a.log[a.log.length-1].t);
+  if(!list.length)return '<div class="empty"><p>'+(q?'Нічого не знайшлося.':'Історія відповідей зʼявиться після першого тренування.')+'</p></div>';
+  return '<div class="list">'+list.map(c=>'<details class="wh"><summary><div class="wtxt"><b>'+esc(c.en)+'</b><span>'+esc(c.uk)+'</span></div><span class="gdots" aria-hidden="true">'+c.log.slice(-8).map(l=>'<i class="g'+l.g+'"></i>').join('')+'</span></summary><div class="gl-list">'+c.log.slice().reverse().map(l=>'<div class="gl-item"><span class="pill g'+l.g+'">'+GL[l.g]+'</span><span class="muted">'+fmtDT(l.t)+' · '+(MODE_L[l.m]||'')+(l.s?'':' · практика')+'</span></div>').join('')+'</div></details>').join('')+'</div>';
+}
+VIEWS.history=function(){
+  const ss=S.sessions.slice().reverse();
+  const sess=ss.length?'<div class="list">'+ss.map(s=>'<div class="sess"><div><b>'+fmtDT(s.start)+'</b><div class="muted" style="font-size:13px">'+(MODE_L[s.mode]||'')+(s.kind==='free'?' · вільна практика':'')+'</div></div><div><b>'+s.n+'</b><div class="muted" style="font-size:12px">'+plural(s.n,'картка','картки','карток')+'</div></div><div><b>'+(s.n?Math.round(s.ok/s.n*100):0)+'%</b><div class="muted" style="font-size:12px">точність</div></div><div><b>'+fmtDur(s.ms)+'</b><div class="muted" style="font-size:12px">тривалість</div></div></div>').join('')+'</div>'
+    :'<div class="empty"><p>Ще немає жодної сесії. Почни з екрана «Сьогодні» — займе 5 хвилин.</p><button class="btn btn-gold" data-act="go" data-v="today">До «Сьогодні»</button></div>';
+  return hdr('Історія','Журнал <span class="hl">занять</span>')+
+    '<div class="chips" role="group" aria-label="Вид історії"><button class="chip" data-act="htab" data-v="sessions" aria-pressed="'+(H.tab==='sessions')+'">Сесії</button><button class="chip" data-act="htab" data-v="words" aria-pressed="'+(H.tab==='words')+'">По словах</button></div>'+
+    (H.tab==='sessions'?sess:'<label class="search"><span class="sr">Пошук слова</span>'+ic('search',18)+'<input class="inp" id="hq" type="search" placeholder="Знайти слово" value="'+esc(H.q)+'" autocomplete="off"></label><div id="hlist">'+histWords()+'</div>');
+};
+
+/* ---------- sheet ---------- */
+let sheetOpen=false,lastFocus=null,sheetKind='';
+function openSheet(html,kind,wide){lastFocus=document.activeElement;sheetKind=kind||'';const sh=$('#sheet');sh.className='sheet'+(wide?' wide':'');sh.innerHTML='<div class="grab" aria-hidden="true"></div>'+html;$('#sheetWrap').hidden=false;sheetOpen=true;setTimeout(()=>{const f=sh.querySelector('[autofocus]')||sh.querySelector('input,textarea,select,button:not(.x)');if(f&&window.innerWidth>860)f.focus();else sh.focus&&sh.setAttribute('tabindex','-1')},30)}
+function setSheet(html){$('#sheet').innerHTML='<div class="grab" aria-hidden="true"></div>'+html}
+function closeSheet(){$('#sheetWrap').hidden=true;sheetOpen=false;sheetKind='';if(lastFocus&&lastFocus.focus&&document.contains(lastFocus))lastFocus.focus()}
+function sheetHead(t,sub){return '<div class="sheet-h"><div><h2 class="h2">'+t+'</h2>'+(sub?'<p class="hint" style="margin:6px 0 0">'+sub+'</p>':'')+'</div><button class="ibtn" data-act="closeSheet" aria-label="Закрити (Esc)">'+ic('x',18)+'</button></div>'}
+
+/* ---------- add words ---------- */
+let A=null;
+function openAdd(prefill){A={step:'input',text:prefill||'',set:(A&&A.set)||'',newSet:'',items:[],busy:false,err:''};openSheet('', 'add',true);renderAdd()}
+function setOptions(sel,withNew){return '<option value="">Без набору</option>'+S.sets.map(s=>'<option value="'+s.id+'"'+(sel===s.id?' selected':'')+'>'+esc(s.name)+(s.lib?' · спільний':'')+'</option>').join('')+(withNew?'<option value="__new"'+(sel==='__new'?' selected':'')+'>+ Новий набір…</option>':'')}
+function renderAdd(){
+  if(!A||sheetKind!=='add')return;
+  if(A.step==='input'){
+    setSheet(sheetHead('Додай <span class="hl">слова</span>','Будь-який формат, по одному на рядок: «apple - яблуко», «give up — здаватися», «look forward to», «яблуко», «run out of; закінчуватися», CSV або таблиця.')+
+      '<label class="field"><span>Встав слова</span><textarea class="ta" id="addTa" autofocus placeholder="apple - яблуко&#10;give up — здаватися&#10;look forward to&#10;яблуко">'+esc(A.text)+'</textarea></label>'+
+      '<div class="row" style="align-items:flex-end"><label class="field" style="flex:1 1 220px"><span>Набір</span><select class="sel" id="addSet">'+setOptions(A.set,true)+'</select></label>'+
+      (A.set==='__new'?'<label class="field" style="flex:1 1 220px"><span>Назва нового набору</span><input class="inp" id="addNewSet" value="'+esc(A.newSet)+'" placeholder="Наприклад, Подорожі"></label>':'')+'</div>'+
+      (A.set==='__new'&&libWritable()?'<label class="chk"><input type="checkbox" id="addShared"'+(A.shared!==false?' checked':'')+'>Спільний набір — побачать усі учасники</label>':'')+
+      (A.set&&A.set!=='__new'&&followed(A.set)?'<p class="hint" style="margin:0">Це спільний набір — нові слова зʼявляться в усіх.</p>':'')+
+      '<p class="hint">Автопереклад: '+'<b>вбудований словник</b> — слова, яких там немає, позначу «Додай переклад».'+' Enter — розпізнати, Shift+Enter — новий рядок.</p>'+
+      (A.err?'<p class="err" role="alert">'+esc(A.err)+'</p>':'')+
+      '<div class="sheet-foot"><label class="btn btn-line" style="cursor:pointer">'+ic('up',18)+'Файл CSV<input type="file" id="addFile" accept=".csv,.txt,.tsv,text/csv,text/plain" hidden></label><button class="btn btn-gold" data-act="parse">Розпізнати</button></div>');
+    const ta=$('#addTa');if(ta){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length)}
+  }else{
+    const live=A.items.filter(i=>!i.removed&&i.dupAct!=='skip');const need=live.filter(i=>!i.en.trim()||!i.uk.trim()).length;
+    setSheet(sheetHead('Перевір <span class="hl">картки</span>','Тапни на будь-яке поле, щоб виправити. «АВТО» — переклад додано автоматично.')+
+      '<div class="rv-list" id="rvList"></div>'+
+      '<div class="sheet-foot"><span class="hint" id="rvInfo" style="margin-right:auto;align-self:center">'+(need?need+' без перекладу':'')+'</span><button class="btn btn-line" data-act="addBack">Назад</button><button class="btn btn-gold" data-act="addSave" id="addSaveBtn"'+(A.busy?' disabled':'')+'>Зберегти '+live.length+'</button></div>');
+  }
+}
+function lang(s){const c=(String(s).match(/[Ѐ-ӿ]/g)||[]).length,l=(String(s).match(/[A-Za-z]/g)||[]).length;return c>l?'uk':(l?'en':'?')}
+const HEAD=/^(english|англійськ\S*|англ\.?|eng|en|ukrainian|українськ\S*|укр\.?|ua|uk|translation|переклад|word|слово|term|термін|фраза|phrase)$/i;
+function csvLine(s){const out=[];let cur='',q=false;for(let i=0;i<s.length;i++){const ch=s[i];if(q){if(ch==='"'){if(s[i+1]==='"'){cur+='"';i++}else q=false}else cur+=ch}else if(ch==='"')q=true;else if(ch===','){out.push(cur);cur=''}else cur+=ch}out.push(cur);return out.map(x=>x.trim())}
+function tidy(s,lg){s=String(s||'').trim().replace(/^["']|["']$/g,'').trim();if(lg==='en'&&/^[A-Z][a-z'’-]+$/.test(s)&&s!=='I')s=s.toLowerCase();if(lg==='uk'&&/^[А-ЯІЇЄҐ][а-яіїєґʼ'’-]+$/.test(s))s=s.toLowerCase();return s}
+function splitLine(raw){
+  let s=String(raw).replace(/^﻿/,'').trim();if(!s)return null;
+  s=s.replace(/^(\d+[.)]|[•*·▪◦])\s+/,'').replace(/^-\s+/,'');
+  let parts=null;
+  if(s.indexOf('\t')>=0)parts=s.split('\t').map(x=>x.trim()).filter(Boolean);
+  else{const m=s.match(/\s+[-–—=]\s+|\s*[—–]\s*|\s*[;=|]\s*|:\s+/);
+    if(m&&m.index>0)parts=[s.slice(0,m.index),s.slice(m.index+m[0].length)];
+    else if(s.indexOf(',')>=0){const f=csvLine(s).filter(Boolean);if(f.length>=2&&lang(f[0])!==lang(f[1])&&lang(f[0])!=='?'&&lang(f[1])!=='?')parts=f}}
+  if(parts&&parts.length>=2){
+    let a=parts[0],b=parts[1];if(HEAD.test(a.trim())&&HEAD.test(b.trim()))return null;
+    let en=a,uk=b;if(lang(a)==='uk'&&lang(b)!=='uk'){en=b;uk=a}
+    const ex=parts[2]&&lang(parts[2])==='en'?parts[2]:'';
+    return{en:tidy(en,'en'),uk:tidy(uk,'uk'),ex};
+  }
+  if(parts&&parts.length===1)s=parts[0];
+  if(HEAD.test(s))return null;
+  return lang(s)==='uk'?{en:'',uk:tidy(s,'uk')}:{en:tidy(s,'en'),uk:''};
+}
+function parseInput(text){
+  const items=String(text).split(/\r?\n/).map(splitLine).filter(Boolean).filter(i=>i.en||i.uk);
+  const single=items.filter(i=>!i.en!==!i.uk).length;let pairs=0;
+  for(let i=0;i<items.length-1;i++)if(items[i].en&&!items[i].uk&&items[i+1].uk&&!items[i+1].en){pairs++;i++}
+  if(pairs>=2&&pairs*2>=single*0.6){const out=[];for(let i=0;i<items.length;i++){const a=items[i],b=items[i+1];if(a.en&&!a.uk&&b&&b.uk&&!b.en){out.push({en:a.en,uk:b.uk,ex:''});i++}else out.push(a)}return out}
+  return items;
+}
+const normEn=s=>String(s||'').toLowerCase().replace(/[’ʼ`]/g,"'").replace(/[….,!?;:"«»()]/g,' ').replace(/\s+/g,' ').trim();
+function dictFill(it){
+  if(!it.uk&&it.en){const d=DICT[normEn(it.en)]||DICT[normEn(it.en).replace(/^to /,'')];if(d){it.uk=d.uk;it.pos=it.pos||d.pos;it.auto=true}}
+  else if(!it.en&&it.uk){const k=it.uk.toLowerCase().trim();const d=REV[k];if(d){it.en=d.en;it.pos=it.pos||d.pos;it.auto=true}}
+  else if(it.en&&!it.pos){const d=DICT[normEn(it.en)];if(d)it.pos=d.pos}
+}
+function markDups(){
+  const ex=new Map();S.cards.forEach(c=>ex.set(normEn(c.en),c.id));const seen=new Map();
+  A.items.forEach((it,i)=>{it.dup=null;it.dupBatch=null;const k=normEn(it.en);if(!k)return;if(ex.has(k)){it.dup=ex.get(k);if(!it.dupAct)it.dupAct='merge'}else if(seen.has(k)){it.dupBatch=seen.get(k);if(!it.dupAct)it.dupAct='merge'}else seen.set(k,i)});
+}
+async function doParse(){
+  const ta=$('#addTa');if(ta)A.text=ta.value;
+  if(A.set==='__new'){const nm=($('#addNewSet')||{}).value||A.newSet;A.newSet=nm.trim();if(!A.newSet){A.err='Дай назву новому набору або обери існуючий.';renderAdd();return}}
+  const items=parseInput(A.text);
+  if(!items.length){A.err='Не бачу жодного слова. Встав по одному слову або парі «word — переклад» на рядок.';renderAdd();return}
+  A.err='';A.items=items.map(i=>({en:i.en,uk:i.uk,ex:i.ex||'',exUk:'',pos:'',ipa:'',auto:false,removed:false,dupAct:null,pending:false}));
+  A.items.forEach(dictFill);A.busy=false;
+  markDups();A.step='review';renderAdd();landCards();
+}
+function rvHTML(it,i){
+  const need=!it.pending&&(!it.uk.trim()||!it.en.trim());
+  let dup='';
+  if(it.dup||it.dupBatch!=null){const what=it.dup?(card(it.dup)||{}).uk:(A.items[it.dupBatch]||{}).uk;
+    dup='<div class="dup"><span>Вже є'+(it.dup?' в колоді':' вище в списку')+(what?': «'+esc(what)+'»':'')+'</span><div class="chips">'+[['merge','Обʼєднати'],['new','Окремо'],['skip','Пропустити']].map(x=>'<button class="chip" data-act="dupAct" data-i="'+i+'" data-v="'+x[0]+'" aria-pressed="'+(it.dupAct===x[0])+'">'+x[1]+'</button>').join('')+'</div></div>'}
+  return '<div class="top"><input class="en" data-i="'+i+'" data-f="en" value="'+esc(it.en)+'" placeholder="англійською" aria-label="Англійською"><button class="ibtn" style="width:32px;height:32px" data-act="say" data-t="'+esc(it.en)+'" aria-label="Озвучити">'+ic('speaker',16)+'</button></div>'+
+    (it.pending&&!it.uk?'<span class="sk" aria-label="Перекладаю"></span>':'<input class="uk'+(need&&!it.uk.trim()?' need':'')+' tr" data-i="'+i+'" data-f="uk" value="'+esc(it.uk)+'" placeholder="Додай переклад" aria-label="Українською">')+
+    (it.pending?'<span class="sk" style="width:40%;height:12px"></span>':((it.pos||it.ipa)?'<div class="meta tr">'+esc([it.pos,it.ipa].filter(Boolean).join(' · '))+'</div>':'')+(it.ex?'<div class="ex tr">'+esc(it.ex)+'</div>':''))+
+    '<div class="badges">'+(it.auto?'<span class="pill tag-auto">АВТО</span>':'')+(need?'<span class="pill tag-need">Додай переклад</span>':'')+'</div>'+dup+
+    '<button class="ibtn x" data-act="rvDel" data-i="'+i+'" aria-label="Прибрати картку">'+ic('x',14)+'</button>';
+}
+function landCards(refill,idx){
+  const list=$('#rvList');if(!list)return;list.innerHTML='';
+  const n=A.items.length,step=reduced()?0:Math.min(70,1100/Math.max(1,n));
+  A.items.forEach((it,i)=>{const el=document.createElement('div');el.className='rv'+(it.removed?' removed':'');el.dataset.i=i;el.innerHTML=rvHTML(it,i);
+    if(!reduced()){if(refill){el.querySelectorAll('.tr').forEach(t=>{t.classList.add('reveal');t.style.animationDelay=(i*Math.min(55,900/n))+'ms'})}else{el.classList.add('land');el.style.animationDelay=(i*step)+'ms'}}
+    list.appendChild(el)});
+}
+function rvRefreshOne(i){const el=$('.rv[data-i="'+i+'"]');if(!el)return;const it=A.items[i];el.className='rv'+(it.removed?' removed':'');el.innerHTML=rvHTML(it,i);rvFoot()}
+function rvFoot(){const live=A.items.filter(i=>!i.removed&&i.dupAct!=='skip');const need=live.filter(i=>!i.en.trim()||!i.uk.trim()).length;const b=$('#addSaveBtn');if(b)b.textContent='Зберегти '+live.length;const inf=$('#rvInfo');if(inf)inf.textContent=need?need+' без перекладу':''}
+function doSave(){
+  if(A.busy)return;
+  const live=A.items.filter(i=>!i.removed&&i.dupAct!=='skip');
+  const bad=live.filter(i=>!i.en.trim()||!i.uk.trim());
+  if(bad.length){toast('Додай переклад для '+bad.length+' '+plural(bad.length,'картки','карток','карток')+' або прибери їх.');const el=$('.rv .need');if(el)el.focus();return}
+  if(!live.length){closeSheet();return}
+  let setId=A.set;
+  if(setId==='__new'){const share=A.shared!==false&&libWritable();const s={id:(share?'L':'s')+uid(),name:A.newSet||'Новий набір'};if(share){s.lib=true;s.skip=[];libPut('libsets/'+s.id,{name:s.name,by:L.me,t:Date.now()})}S.sets.push(s);setId=s.id}
+  const toLib=!!followed(setId);
+  const rects=$$('.rv').filter(el=>{const it=A.items[+el.dataset.i];return it&&!it.removed&&it.dupAct!=='skip'}).map(el=>el.getBoundingClientRect());
+  const oldNew=todayQueue().newCards.length;
+  const now=Date.now(),created=[],mergedIds=new Set();
+  live.forEach((it,j)=>{
+    const tgt=it.dupAct==='merge'?(it.dup?card(it.dup):(it.dupBatch!=null?A.items[it.dupBatch]._card:null)):null;
+    if(tgt){const add=it.uk.split(/[,/]/).map(x=>x.trim()).filter(Boolean).filter(v=>!tgt.uk.toLowerCase().split(/[,/]/).map(x=>x.trim()).includes(v.toLowerCase()));if(add.length)tgt.uk=tgt.uk+', '+add.join(', ');if(!tgt.ex&&it.ex){tgt.ex=it.ex;tgt.exUk=it.exUk}if(!tgt.ipa)tgt.ipa=it.ipa;if(!tgt.pos)tgt.pos=it.pos;mergedIds.add(tgt.id);it._card=tgt;return}
+    const c=makeCard({en:it.en.trim(),uk:it.uk.trim(),pos:it.pos,ipa:it.ipa,ex:it.ex,exUk:it.exUk,set:setId||'',auto:it.auto},now+j);it._card=c;created.push(c)});
+  assignChunks(created,S.cards);S.cards.push(...created);
+  if(toLib)created.forEach(c=>{c.lid='c'+uid();libPut('libcards/'+c.lid,libBody(c,setId))});
+  mergedIds.forEach(id=>{const c=card(id);if(c&&c.lid&&followed(c.set))libPut('libcards/'+c.lid,libBody(c,c.set))});
+  created.forEach(c=>P.dirty.add('ch:'+c.ch));mergedIds.forEach(id=>{const c=card(id);if(c)P.dirty.add('ch:'+c.ch)});
+  const dk=dd();dk.total=S.cards.length;touch('meta');
+  A.set=setId;const nAdd=created.length,nMerge=mergedIds.size;
+  closeSheet();A=null;
+  view='today';try{localStorage.setItem(LS+':view','today')}catch(e){}render();$('#main').scrollTop=0;
+  flyIn(rects,oldNew,nAdd,nMerge);
+}
+function rollNum(el,from,to){if(!el)return;if(reduced()||from===to){el.textContent=to;return}const t0=performance.now(),d=650;const f=t=>{const p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);el.textContent=Math.round(from+(to-from)*e);if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
+function flyIn(rects,oldNew,nAdd,nMerge){
+  const msg=nAdd?'Додано '+nAdd+' '+plural(nAdd,'картку','картки','карток')+(nMerge?', обʼєднано '+nMerge:''):'Обʼєднано '+nMerge+' '+plural(nMerge,'картку','картки','карток');
+  const tgt=$('#heroNew')&&!$('#heroNew').hidden?$('#heroNew'):($('#deckN')||$('.tab-plus'));const hero=$('#hero');
+  const newVal=todayQueue().newCards.length;const deck=$('#deckN');
+  const finish=()=>{const hn=$('#heroNew');if(hn&&!hn.hidden){rollNum(hn,oldNew,newVal);hn.classList.remove('bump');void hn.offsetWidth;hn.classList.add('bump')}if(deck){deck.classList.remove('bump');void deck.offsetWidth;deck.classList.add('bump')}if(hero){hero.classList.remove('flash');void hero.offsetWidth;hero.classList.add('flash')}toast(msg)};
+  if(!tgt||reduced()||!rects.length){finish();return}
+  const hn=$('#heroNew');if(hn&&!hn.hidden)hn.textContent=oldNew;
+  const tr=tgt.getBoundingClientRect(),tx=tr.left+tr.width/2,ty=tr.top+tr.height/2;
+  const list=rects.slice(0,14);let left=list.length;
+  list.forEach((r,i)=>{const el=document.createElement('div');el.className='fly';el.textContent='+1';document.body.appendChild(el);
+    const sx=r.left+r.width/2-18,sy=r.top+r.height/2-14;el.style.transform='translate('+sx+'px,'+sy+'px) scale(1)';
+    const anim=el.animate([{transform:'translate('+sx+'px,'+sy+'px) scale(1)',opacity:1},{transform:'translate('+((sx+tx)/2-60)+'px,'+(Math.min(sy,ty)-80)+'px) scale(.9)',opacity:1,offset:.45},{transform:'translate('+(tx-18)+'px,'+(ty-14)+'px) scale(.35)',opacity:.2}],{duration:720,delay:i*55,easing:'cubic-bezier(.45,0,.3,1)',fill:'forwards'});
+    anim.onfinish=()=>{el.remove();if(--left===0)finish()}});
+}
+
+/* ---------- edit card ---------- */
+function openEdit(id){const c=card(id);if(!c)return;const s=status(c);const now=Date.now();
+  const due=c.st==='new'?'ще не показувалась':c.due<=now?'вже на повторенні':'наступний показ '+(c.st==='review'?fmtD(dayKey(c.due)):'через '+Math.max(1,Math.round((c.due-now)/MIN))+' хв');
+  const isLib=!!(c.lid&&followed(c.set));
+  openSheet(sheetHead('Редагувати картку','<span class="pill st-'+s+'">'+STL[s]+'</span> &nbsp;'+due+(c.ivl?' · інтервал '+c.ivl+' д':''))+
+  (isLib?'<div class="note-box">Спільна картка з набору «'+esc(setName(c.set))+'». Зміни слова й прикладу побачать усі, твій прогрес лишається твоїм.</div>':'')+
+  '<div class="grid2" style="gap:12px">'+
+  '<label class="field"><span>Англійською</span><input class="inp" id="e_en" value="'+esc(c.en)+'"></label>'+
+  '<label class="field"><span>Українською</span><input class="inp" id="e_uk" value="'+esc(c.uk)+'"></label>'+
+  '<label class="field"><span>Частина мови</span><input class="inp" id="e_pos" value="'+esc(c.pos)+'"></label>'+
+  '<label class="field"><span>Транскрипція</span><input class="inp" id="e_ipa" value="'+esc(c.ipa)+'"></label>'+
+  '<label class="field" style="grid-column:1/-1"><span>Приклад англійською</span><input class="inp" id="e_ex" value="'+esc(c.ex)+'"></label>'+
+  '<label class="field" style="grid-column:1/-1"><span>Переклад прикладу</span><input class="inp" id="e_exUk" value="'+esc(c.exUk)+'"></label>'+
+  '<label class="field"><span>Набір</span><select class="sel" id="e_set">'+setOptions(c.set,false)+'</select></label>'+
+  '<label class="field"><span>Теги через кому</span><input class="inp" id="e_tags" value="'+esc((c.tags||[]).join(', '))+'"></label></div>'+
+  (c.log.length?'<div><div class="eyebrow" style="margin-bottom:6px">Останні відповіді</div><div class="chips">'+c.log.slice(-10).reverse().map(l=>'<span class="pill g'+l.g+'" title="'+fmtDT(l.t)+'">'+GL[l.g]+'</span>').join('')+'</div></div>':'')+
+  '<div class="sheet-foot">'+(isLib?'<button class="btn btn-danger" data-act="delCard" data-id="'+c.id+'">Прибрати в мене</button>'+(libWritable()?'<button class="btn btn-danger" data-act="delCardAll" data-id="'+c.id+'" style="margin-right:auto">Видалити для всіх</button>':'<span style="margin-right:auto"></span>'):'<button class="btn btn-danger" data-act="delCard" data-id="'+c.id+'" style="margin-right:auto">Видалити</button>')+'<button class="btn btn-line" data-act="closeSheet">Скасувати</button><button class="btn btn-gold" data-act="saveCard" data-id="'+c.id+'">Зберегти</button></div>','edit',true)}
+function saveCard(id){const c=card(id);if(!c)return;const v=k=>($('#e_'+k)||{}).value||'';const en=v('en').trim(),uk=v('uk').trim();if(!en){toast('Англійське слово не може бути порожнім.');return}
+  if(!uk){toast('Додай переклад.');return}
+  const oldSet=c.set,wasLib=!!(c.lid&&followed(oldSet));
+  Object.assign(c,{en,uk,pos:v('pos').trim(),ipa:v('ipa').trim(),ex:v('ex').trim(),exUk:v('exUk').trim(),set:v('set'),tags:v('tags').split(',').map(x=>x.trim()).filter(Boolean),auto:c.auto&&uk===c.uk});
+  if(wasLib){if(followed(c.set))libPut('libcards/'+c.lid,libBody(c,c.set));else{const os=followed(oldSet);if(os){os.skip=os.skip||[];os.skip.push(c.lid)}delete c.lid}}
+  else if(followed(c.set)&&libWritable()){c.lid='c'+uid();libPut('libcards/'+c.lid,libBody(c,c.set))}
+  touchCard(c);touch('meta');closeSheet();render();toast(wasLib||c.lid?'Збережено для всіх':'Збережено')}
+function delCard(id,all){const i=S.cards.findIndex(c=>c.id===id);if(i<0)return;const c=S.cards.splice(i,1)[0];touchCard(c);if(sheetOpen)closeSheet();
+  const fs=c.lid?followed(c.set):null;let lb=null;
+  if(fs){if(all){lb=L.cards.get(c.lid);libDel('libcards/'+c.lid)}else{fs.skip=fs.skip||[];fs.skip.push(c.lid);touch('meta')}}
+  render();
+  toast(all?'«'+c.en+'» видалено для всіх':fs?'«'+c.en+'» прибрано з твого навчання':'Картку «'+c.en+'» видалено',{action:'Скасувати',onAction:()=>{S.cards.splice(Math.min(i,S.cards.length),0,c);if(fs){if(all&&lb)libPut('libcards/'+c.lid,lb);else fs.skip=(fs.skip||[]).filter(x=>x!==c.lid);touch('meta')}touchCard(c);render()}})}
+
+/* ---------- sets ---------- */
+function openSetForm(id){const s=id?S.sets.find(x=>x.id===id):null;
+  openSheet(sheetHead(s?'Набір':'Новий набір',s&&s.lib?'Спільний набір — нову назву побачать усі':'')+'<label class="field"><span>Назва</span><input class="inp" id="setName" value="'+esc(s?s.name:'')+'" placeholder="Наприклад, Подорожі" autofocus></label>'+
+  (!s&&libWritable()?'<label class="chk"><input type="checkbox" id="setShared" checked>Спільний набір — побачать усі учасники</label>':'')+
+  '<div class="sheet-foot">'+(s?(s.lib?'<button class="btn btn-danger" data-act="unfollow" data-id="'+s.id+'">Прибрати з моїх</button>'+(libWritable()?'<button class="btn btn-danger" data-act="libDelSet" data-id="'+s.id+'" style="margin-right:auto">Видалити для всіх</button>':'<span style="margin-right:auto"></span>'):'<button class="btn btn-danger" data-act="setDel" data-id="'+s.id+'" style="margin-right:auto">Видалити набір</button>'):'')+'<button class="btn btn-line" data-act="closeSheet">Скасувати</button><button class="btn btn-gold" data-act="setSave" data-id="'+(s?s.id:'')+'">Зберегти</button></div>','set')}
+function setSave(id){const nm=($('#setName').value||'').trim();if(!nm){toast('Дай набору назву.');return}
+  if(id){const s=S.sets.find(x=>x.id===id);if(s){s.name=nm;if(s.lib){const ls=L.sets.get(s.id)||{by:L.me,t:Date.now()};libPut('libsets/'+s.id,Object.assign({},ls,{name:nm}))}}}
+  else{const share=($('#setShared')||{}).checked&&libWritable();const s={id:(share?'L':'s')+uid(),name:nm};if(share){s.lib=true;s.skip=[];libPut('libsets/'+s.id,{name:nm,by:L.me,t:Date.now()})}S.sets.push(s)}
+  touch('meta');closeSheet();render()}
+function setDel(id,confirmed){const s=S.sets.find(x=>x.id===id);if(!s)return;const n=S.cards.filter(c=>c.set===id).length;
+  if(!confirmed&&n){setSheet(sheetHead('Видалити «'+esc(s.name)+'»?')+'<p style="margin:0">'+n+' '+plural(n,'картка','картки','карток')+' не зникнуть — вони перейдуть у «Без набору».</p><div class="sheet-foot"><button class="btn btn-line" data-act="closeSheet">Скасувати</button><button class="btn btn-danger" data-act="setDelYes" data-id="'+id+'">Видалити набір</button></div>');return}
+  S.sets=S.sets.filter(x=>x.id!==id);const chs=new Set();S.cards.forEach(c=>{if(c.set===id){c.set='';chs.add(c.ch)}});chs.forEach(n=>P.dirty.add('ch:'+n));touch('meta');closeSheet();render()}
+
+/* ---------- settings & data ---------- */
+function openSettings(){const st=S.settings;loadVoices();
+  openSheet(sheetHead('Налаштування')+
+  '<div class="grid2" style="gap:12px">'+
+  '<label class="field"><span>Нових карток на день</span><input class="inp" id="s_new" type="number" min="0" max="50" value="'+st.newPerDay+'"></label>'+
+  '<label class="field"><span>Карток за одну сесію</span><input class="inp" id="s_size" type="number" min="5" max="100" value="'+st.sessionSize+'"></label>'+
+  '<label class="field"><span>Максимум повторень на день</span><input class="inp" id="s_cap" type="number" min="10" max="500" value="'+st.reviewCap+'"></label>'+
+  '<label class="field"><span>Як до тебе звертатися</span><input class="inp" id="s_name" value="'+esc(st.name)+'"></label>'+
+  '<label class="field"><span>Ціль (слів)</span><input class="inp" id="s_goal" type="number" min="10" max="20000" value="'+st.goal+'"></label>'+
+  '<label class="field"><span>До дати</span><input class="inp" id="s_gdate" type="date" value="'+esc(st.goalDate)+'"></label>'+
+  '<label class="field"><span>Голос (американська вимова)</span><select class="sel" id="s_voice"><option value="">Автоматично (en-US)</option>'+voices.map(v=>'<option value="'+esc(v.voiceURI)+'"'+(v.voiceURI===st.voice?' selected':'')+'>'+esc(v.name+' · '+v.lang)+'</option>').join('')+'</select></label>'+
+  '<label class="field"><span>Швидкість озвучки: <b id="rateV">'+st.rate+'</b></span><input id="s_rate" type="range" min="0.6" max="1.2" step="0.05" value="'+st.rate+'"></label>'+
+  '<label class="row" style="grid-column:1/-1;gap:10px"><input type="checkbox" id="s_auto"'+(st.autoSpeak?' checked':'')+' style="width:20px;height:20px;accent-color:#007AFF"><span>Автоматично озвучувати англійське слово на картці</span></label>'+
+  '</div>'+
+  '<div class="card" style="background:var(--card);display:flex;flex-direction:column;gap:12px"><div class="eyebrow">Дані</div><label class="field"><span>Google-таблиця (адреса Apps Script)</span><input class="inp" id="s_sheet" inputmode="url" autocomplete="off" placeholder="https://script.google.com/macros/s/…/exec" value="'+esc(shGet())+'"></label><p class="hint" style="margin:0">'+(shGet()?'Усі зміни дублюються в таблицю (історія — Файл → Історія версій). ':'Без таблиці дані лишаються тільки на цьому пристрої. ')+lastBackup()+'</p>'+
+  '<div class="row"><button class="btn btn-line btn-sm" data-act="exp" data-v="json">'+ic('down',16)+'Експорт JSON</button><button class="btn btn-line btn-sm" data-act="exp" data-v="csv">'+ic('down',16)+'Експорт CSV</button><label class="btn btn-line btn-sm" style="cursor:pointer">'+ic('up',16)+'Імпорт JSON / CSV<input type="file" id="impFile" accept=".json,.csv,.tsv,.txt,application/json,text/csv" hidden></label><span class="spacer"></span><button class="btn btn-ghost btn-sm" data-act="reset" style="color:var(--bad)">Скинути все</button></div></div>'+
+  '<div class="sheet-foot"><button class="btn btn-line" data-act="closeSheet">Скасувати</button><button class="btn btn-gold" data-act="saveSettings">Зберегти</button></div>','settings',true)}
+function lastBackup(){let v=0;try{v=+localStorage.getItem(LS+':lastExp')||0}catch(e){}return v?'Остання копія-файл: '+Math.max(0,Math.floor((Date.now()-v)/DAY))+' дн. тому.':'Копію-файл ще не робили.'}
+function saveSettings(){const su=(($('#s_sheet')||{}).value||'').trim(),shOld=shGet();if(su&&!/^https:\/\/script\.google(usercontent)?\.com\//.test(su)){toast('Адреса таблиці має починатися з https://script.google.com/');return}
+  const n=(id,min,max,def)=>{const v=parseFloat(($('#'+id)||{}).value);return isFinite(v)?Math.min(max,Math.max(min,v)):def};const st=S.settings;
+  st.newPerDay=Math.round(n('s_new',0,50,8));st.sessionSize=Math.round(n('s_size',5,100,15));st.reviewCap=Math.round(n('s_cap',10,500,60));st.goal=Math.round(n('s_goal',10,20000,500));
+  const gd=$('#s_gdate').value;if(/^\d{4}-\d{2}-\d{2}$/.test(gd))st.goalDate=gd;st.name=($('#s_name').value||'').trim()||'друже';st.voice=$('#s_voice').value;st.rate=n('s_rate',0.6,1.2,0.95);st.autoSpeak=$('#s_auto').checked;
+  touch('meta');if(su!==shOld){try{su?localStorage.setItem(SH,su):localStorage.removeItem(SH)}catch(e){}P.col=null;initSheet()}closeSheet();render();toast('Налаштування збережено')}
+function csvCell(v){v=String(v==null?'':v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+async function exportData(kind){
+  const tk=today();let data,fn;
+  if(kind==='json'){data=JSON.stringify(Object.assign({app:'slovo-za-slovom',exported:new Date().toISOString()},S),null,2);fn='slovo-za-slovom-'+tk+'.json'}
+  else{data='﻿'+[['en','uk','pos','ipa','example','example_uk','set','status','interval_days','next_due']].concat(S.cards.map(c=>[c.en,c.uk,c.pos,c.ipa,c.ex,c.exUk,c.set?setName(c.set):'',STL[status(c)],c.ivl,c.st==='new'?'':new Date(c.due).toISOString().slice(0,10)])).map(r=>r.map(csvCell).join(',')).join('\n');fn='slovo-za-slovom-'+tk+'.csv'}
+  try{localStorage.setItem(LS+':lastExp',String(Date.now()))}catch(e){}
+  try{const f=new File([data],fn,{type:kind==='json'?'application/json':'text/csv'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f]});return}catch(e){if(e&&e.name==='AbortError')return}}
+    const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=fn;document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(a.href)},1500);return}catch(e){}
+  openSheet(sheetHead('Експорт',fn)+'<p class="hint" style="margin:0">Збереження файлу тут недоступне. Скопіюй текст і збережи його у файл.</p><textarea class="ta" id="expTa" readonly style="min-height:260px;font-size:13px">'+esc(data)+'</textarea><div class="sheet-foot"><button class="btn btn-line" data-act="closeSheet">Закрити</button><button class="btn btn-gold" data-act="copyExp">Копіювати</button></div>','export',true);
+}
+let pendingImport=null;
+function handleImport(file){const r=new FileReader();r.onload=()=>{const txt=String(r.result||'');
+  if(/\.json$/i.test(file.name)||/^\s*\{/.test(txt)){let o;try{o=JSON.parse(txt)}catch(e){toast('Файл не схожий на JSON-експорт. Перевір, що це файл з «Експорт JSON».');return}
+    if(!o||!Array.isArray(o.cards)){toast('У файлі немає списку карток. Потрібен файл з «Експорт JSON».');return}
+    pendingImport=o;setSheet(sheetHead('Замінити дані?')+'<p style="margin:0">Зараз у тебе '+S.cards.length+' '+plural(S.cards.length,'картка','картки','карток')+'. Імпорт замінить усе на '+o.cards.length+' '+plural(o.cards.length,'картку','картки','карток')+' з файлу, разом з прогресом та історією.</p><div class="sheet-foot"><button class="btn btn-line" data-act="closeSheet">Скасувати</button><button class="btn btn-gold" data-act="impYes">Замінити</button></div>');
+  }else{closeSheet();openAdd(txt.replace(/^﻿/,''))}};r.onerror=()=>toast('Не вдалося прочитати файл. Спробуй ще раз.');r.readAsText(file)}
+function applyImport(){const o=pendingImport;pendingImport=null;if(!o)return;const oldCh=[...new Set(S.cards.map(c=>c.ch))];const ns=normalizeState({v:1,created:o.created||Date.now(),updated:Date.now(),settings:o.settings,sets:o.sets,cards:o.cards,daily:o.daily,sessions:o.sessions});ns.cards.forEach(c=>c.ch=-1);assignChunks(ns.cards);S=ns;touchAll(oldCh);closeSheet();render();toast('Імпортовано '+S.cards.length+' '+plural(S.cards.length,'картку','картки','карток'))}
+function resetAll(step){if(!step){setSheet(sheetHead('Скинути все?')+'<p style="margin:0">Видалимо всі картки, прогрес та історію. Повернути не вийде — спершу зроби експорт JSON.</p><div class="sheet-foot"><button class="btn btn-line" data-act="closeSheet">Скасувати</button><button class="btn btn-danger" data-act="resetYes">Так, видалити все</button></div>');return}
+  const oldCh=[...new Set(S.cards.map(c=>c.ch))];const st=S.settings;S={v:1,created:Date.now(),updated:Date.now(),settings:st,sets:[],cards:[],daily:{},sessions:[],libMigrated:true,libSeen:0};touchAll(oldCh);closeSheet();go('today');toast('Усе очищено. Почни з «Додати слова».')}
+
+/* ---------- training ---------- */
+let T=null;
+function norm(s){return String(s||'').toLowerCase().replace(/\(.*?\)/g,' ').replace(/[ʼ’'`]/g,"'").replace(/[.,!?…:;"«»]/g,' ').replace(/\s+/g,' ').trim()}
+function variants(s,en){const v=String(s||'').split(/[\/,;]| або /).map(norm).filter(Boolean);const all=v.concat([norm(s)]);return en?all.map(x=>x.replace(/^to /,'')):all}
+function lev(a,b){if(a===b)return 0;const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=Array.from({length:n+1},(_,j)=>j);for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
+function checkAns(inp,target,en){let x=norm(inp);if(en)x=x.replace(/^to /,'');if(!x)return'no';const vs=variants(target,en);if(vs.includes(x))return'ok';let best=99,len=0;vs.forEach(v=>{const d=lev(x,v);if(d<best){best=d;len=v.length}});if((len>=4&&best<=1)||(len>=9&&best<=2))return'typo';return'no'}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function freePool(scope,size){
+  const now=Date.now();let base=scope==='all'?S.cards:scope==='hard'?S.cards.filter(c=>c.hard):S.cards.filter(c=>(c.set||'')===scope&&(scope!==''||true));
+  if(scope==='')base=S.cards.filter(c=>!c.set||!S.sets.some(s=>s.id===c.set));
+  const newLeft=Math.max(0,S.settings.newPerDay-(dd().new||0));let nUsed=0;
+  const scored=base.map(c=>{let s=Math.random();if(c.st!=='new'&&isSched(c,now))s+=10;if(c.hard)s+=5;if(c.st!=='new')s+=Math.max(0,3-c.ivl/7);if(c.st==='new'){if(nUsed<newLeft){nUsed++;s+=2}else s-=20}return{c,s}}).sort((a,b)=>b.s-a.s);
+  return scored.slice(0,size).map(o=>o.c);
+}
+function startSession(mode,scope){
+  if(!S.cards.length){toast('Спершу додай слова.');openAdd();return}
+  scope=scope||(($('#scope')||{}).value)||'today';
+  if(mode==='lesson'){startLesson(scope);return}
+  let kind='srs',list;
+  if(scope==='today'){list=srsOrder(todayQueue()).slice(0,S.settings.sessionSize);if(!list.length){kind='free';list=freePool('all',S.settings.sessionSize);toast('На сьогодні черга порожня — це вільна практика, розклад не зміниться.')}}
+  else{kind='free';list=freePool(scope,S.settings.sessionSize)}
+  if(!list.length){toast('У цьому наборі немає карток.');return}
+  if((mode==='choice'||mode==='listen'||mode==='mixed')&&S.cards.length<4){toast('Для цього режиму потрібно хоча б 4 картки. Запускаю звичайні картки.');mode='flip'}
+  const dir=S.settings.dir;
+  T={kind,mode,items:list.map(c=>({id:c.id,side:mode==='listen'?'en':dir==='mix'?(Math.random()<.5?'en':'uk'):dir,m:subMode(mode,c)})),i:0,start:Date.now(),cardStart:Date.now(),n:0,ok:0,ms:0,revealed:false,res:null,sugg:3,opts:null,pick:null,reins:{},done:false};
+  $('#train').hidden=false;document.body.style.overflow='hidden';prepItem();renderTrain();
+}
+function cur(){return T&&T.items[T.i]?card(T.items[T.i].id):null}
+function subMode(mode,c){if(mode!=='mixed')return mode;if(c.st==='new')return'flip';return Math.random()<.5?'flip':'choice'}
+function md(){const it=T&&T.items[T.i];return it?(it.m||T.mode):'flip'}
+function isChoice(){const m=md();return m==='choice'||m==='listen'}
+function keyGrade(n){if(isChoice()){if(T.res==='no')return 1;if(n===1)return 0}return n}
+function prepItem(){T.revealed=false;T.res=null;T.pick=null;T.sugg=3;T.cardStart=Date.now();const it=T.items[T.i],c=cur();if(!c)return;
+  if(isChoice()){const ansSide=it.side==='en'?'uk':'en';const others=shuffle(S.cards.filter(x=>x.id!==c.id&&x[ansSide]&&norm(x[ansSide])!==norm(c[ansSide])));const same=others.filter(x=>x.pos===c.pos);const pick=[];const used=new Set();[...same,...others].forEach(x=>{if(pick.length<3&&!used.has(norm(x[ansSide]))){pick.push(x);used.add(norm(x[ansSide]))}});T.opts=shuffle([c,...pick]).map(x=>({id:x.id,text:x[ansSide]}))}}
+function gradeRow(c){const now=Date.now(),sch=isSched(c,now);
+  if(isChoice()&&T.res==='no')return '<button class="grade gr-next" data-act="grade" data-g="1" style="width:100%">Далі<span class="k">Enter</span><small>'+(sch?'повторю через '+ivlLabel(c,1,now):'повторю в цій вправі')+'</small></button>';
+  const gs=isChoice()?[2,3,4]:[1,2,3,4];
+  return '<div class="grades'+(gs.length===3?' g3c':'')+'" role="group" aria-label="Оцінка">'+gs.map(g=>'<button class="grade gr'+g+(T.sugg===g?' sugg':'')+'" data-act="grade" data-g="'+g+'">'+GL[g]+'<span class="k">'+g+'</span><small>'+(sch?ivlLabel(c,g,now):'практика')+'</small></button>').join('')+'</div>'}
+function sayBtn(t,big){return '<button class="ibtn" data-act="say" data-t="'+esc(t)+'" aria-label="Озвучити (P)"'+(big?' style="width:48px;height:48px"':'')+'>'+ic('speaker',big?22:18)+'</button>'}
+function exBlock(c){return c.ex?'<div class="olive exbox"><div class="eyebrow">Приклад</div><p>'+esc(c.ex)+'</p>'+(c.exUk?'<p>'+esc(c.exUk)+'</p>':'')+'</div>':''}
+function renderTrain(){
+  const el=$('#train');if(!T){el.hidden=true;return}
+  if(T.done)return renderDone();
+  const c=cur();if(!c){nextItem();return}
+  const it=T.items[T.i],len=T.items.length,promptEn=it.side==='en';
+  const top='<div class="t-top"><button class="ibtn" data-act="exitTrain" aria-label="Вийти (Esc)">'+ic('x',18)+'</button><div class="t-prog" aria-hidden="true"><i style="width:'+(T.i/len*100)+'%"></i></div><span class="t-count">'+(T.i+1)+' / '+len+'</span></div>';
+  let bodyH='',bottom='';
+  const ansText=promptEn?c.uk:c.en;
+  const kind=T.mode==='mixed'?'<div class="t-kind"><span class="pill st-learning">'+(md()==='flip'?'Картка':'Обери з 4')+'</span></div>':'';
+  if(md()==='flip'){
+    bodyH='<div class="flip'+(T.revealed?' on':'')+'" id="flip" data-act="flipCard" role="button" tabindex="0" aria-label="'+(T.revealed?'Відповідь показано':'Перевернути картку (пробіл)')+'"><div class="flip-in">'+
+      '<div class="face front"><div class="eyebrow">'+(promptEn?'Англійською':'Українською')+'</div><div class="wbig">'+esc(promptEn?c.en:c.uk)+'</div>'+(promptEn?(c.ipa?'<div class="ipa">'+esc(c.ipa)+'</div>':'')+'<div class="say">'+sayBtn(c.en,true)+'</div>':'<div class="ipa">'+esc(c.pos)+'</div>')+'<div class="hint-key">Пробіл — перевернути</div></div>'+
+      '<div class="face back"><div class="eyebrow">'+(promptEn?'Переклад':'English')+'</div><div class="wmid">'+esc(ansText)+'</div>'+(!promptEn&&c.ipa?'<div class="ipa">'+esc(c.ipa)+'</div>':'')+'<div class="say">'+sayBtn(c.en)+(c.pos?'<span class="muted" style="font-size:13px">'+esc(c.pos)+'</span>':'')+'</div>'+exBlock(c)+'</div>'+
+    '</div></div>';
+    bottom=T.revealed?gradeRow(c):'<button class="btn btn-gold btn-lg" data-act="flipCard" style="width:100%">Показати відповідь</button>';
+  }else if(md()==='type'){
+    bodyH='<div class="prompt"><div class="eyebrow">'+(promptEn?'Переклади українською':'Переклади англійською')+'</div><div class="wbig">'+esc(promptEn?c.en:c.uk)+'</div>'+(promptEn?(c.ipa?'<div class="ipa">'+esc(c.ipa)+'</div>':'')+'<div class="say">'+sayBtn(c.en)+'</div>':'<div class="ipa">'+esc(c.pos)+'</div>')+'</div>'+
+      '<input class="type-in" id="typeIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="'+(promptEn?'Українською…':'Англійською…')+'" aria-label="Твоя відповідь"'+(T.revealed?' readonly value="'+esc(T.typed||'')+'"':'')+'>'+
+      (T.revealed?'<div class="result '+T.res+'" role="status"><span style="font-weight:700">'+(T.res==='ok'?'Правильно!':T.res==='typo'?'Майже — перевір написання':'Правильна відповідь')+'</span><span class="ans">'+esc(ansText)+'</span></div>'+exBlock(c):'');
+    bottom=T.revealed?gradeRow(c):'<button class="btn btn-gold btn-lg" data-act="check" style="width:100%">Перевірити</button>';
+  }else{
+    const listen=md()==='listen';
+    bodyH=(listen?'<div class="prompt"><div class="eyebrow">Послухай і обери переклад</div><button class="listen-btn" data-act="say" data-t="'+esc(c.en)+'" aria-label="Прослухати ще раз (P)">'+ic('speaker',46,2)+'</button>'+(T.revealed?'<div class="wmid">'+esc(c.en)+'</div>'+(c.ipa?'<div class="ipa">'+esc(c.ipa)+'</div>':''):'<div class="hint-key">P — повторити</div>')+'</div>'
+      :'<div class="prompt"><div class="eyebrow">'+(promptEn?'Обери переклад':'Обери англійською')+'</div><div class="wbig">'+esc(promptEn?c.en:c.uk)+'</div>'+(promptEn?(c.ipa?'<div class="ipa">'+esc(c.ipa)+'</div>':'')+'<div class="say">'+sayBtn(c.en)+'</div>':'')+'</div>')+
+      '<div class="opts" role="group" aria-label="Варіанти">'+T.opts.map((o,k)=>{let cls='';if(T.revealed){if(o.id===c.id)cls=' ok';else if(T.pick===k)cls=' no';else cls=' dim'}return '<button class="opt'+cls+'" data-act="pick" data-k="'+k+'"'+(T.revealed?' disabled':'')+'><span class="kk">'+(k+1)+'</span><span>'+esc(o.text)+'</span></button>'}).join('')+'</div>'+
+      (T.revealed?exBlock(c):'');
+    bottom=T.revealed?gradeRow(c):'<p class="hint-key" style="text-align:center;margin:0">Натисни варіант або клавішу 1–4</p>';
+  }
+  el.innerHTML=top+kind+'<div class="t-body" id="tBody">'+bodyH+'</div><div class="t-bottom">'+bottom+'</div>';
+  if(md()==='type'&&!T.revealed){const ti=$('#typeIn');if(ti)ti.focus()}
+}
+function autoSpeak(){const it=T.items[T.i],c=cur();if(!c)return;if(md()==='listen')speak(c.en);else if(S.settings.autoSpeak&&it.side==='en'&&md()!=='type')speak(c.en)}
+function reveal(){if(!T||T.revealed)return;T.revealed=true;T.sugg=3;renderTrain();const it=T.items[T.i],c=cur();if(S.settings.autoSpeak&&it.side==='uk'&&c)speak(c.en)}
+function checkType(){const ti=$('#typeIn');if(!ti||T.revealed)return;const v=ti.value;if(!v.trim()){ti.focus();return}const it=T.items[T.i],c=cur();T.typed=v;T.res=checkAns(v,it.side==='en'?c.uk:c.en,it.side==='uk');T.sugg=T.res==='ok'?3:T.res==='typo'?2:1;T.revealed=true;renderTrain();if(S.settings.autoSpeak)speak(c.en)}
+function pickOpt(k){if(!T||T.revealed||!T.opts||!T.opts[k])return;const c=cur();T.pick=k;const ok=T.opts[k].id===c.id;T.res=ok?'ok':'no';T.sugg=ok?3:1;T.revealed=true;renderTrain();if(md()!=='listen'&&S.settings.autoSpeak)speak(c.en)}
+function grade(g){
+  if(!T||!T.revealed)return;const c=cur();if(!c)return;const now=Date.now();if(isChoice()&&T.res==='no')g=1;
+  const ms=Math.min(now-T.cardStart,60000);T.ms+=ms;T.n++;const ok=g>=2;if(ok)T.ok++;
+  const sch=isSched(c,now);const wasNew=c.st==='new';const d=dd();
+  if(sch){Object.assign(c,schedule(c,g,now));if(wasNew)d.new++;else d.rev++}
+  if(!wasNew){if(g===1){c.wrong++;c.right=0;if(c.wrong>=3)c.hard=true}else{c.right++;c.wrong=0;if(c.hard&&(c.right>=3||c.ivl>=21))c.hard=false}}
+  d.tot++;if(ok)d.ok++;d.ms+=ms;
+  c.log.push({t:now,g,m:md(),s:sch?1:0});if(c.log.length>25)c.log=c.log.slice(-25);
+  d.learned=countLearned();d.total=S.cards.length;touchCard(c);
+  const it=T.items[T.i];T.reins[c.id]=T.reins[c.id]||0;const rm=T.mode==='mixed'?(it.m==='flip'?'choice':'flip'):it.m;
+  if(sch&&c.st!=='review'&&c.due-now<=15*MIN&&T.reins[c.id]<4){T.reins[c.id]++;T.items.push({id:c.id,side:it.side,m:rm})}
+  else if(!sch&&g===1&&T.reins[c.id]<1){T.reins[c.id]++;T.items.splice(Math.min(T.items.length,T.i+4),0,{id:c.id,side:it.side,m:rm})}
+  nextItem();
+}
+function nextItem(){T.i++;if(T.i>=T.items.length){finishSession();return}if(!cur()){nextItem();return}prepItem();renderTrain();autoSpeak()}
+function finishSession(){if(!T||T.done)return;T.done=true;if(T.n>0){const now=Date.now();S.sessions.push({id:uid(),start:T.start,end:now,ms:T.ms,n:T.n,ok:T.ok,mode:T.mode,kind:T.kind});if(S.sessions.length>300)S.sessions=S.sessions.slice(-300);dd().sess=(dd().sess||0)+1;touch('meta','sessions')}renderDone()}
+function renderDone(){const q=todayQueue(),left=q.learn.length+q.revAvail+q.newCards.length,acc=T.n?Math.round(T.ok/T.n*100):0,stk=streak();
+  $('#train').innerHTML='<div class="t-top"><button class="ibtn" data-act="exitTrain" aria-label="Закрити (Esc)">'+ic('x',18)+'</button><div class="t-prog"><i style="width:100%"></i></div><span class="t-count">готово</span></div>'+
+  '<div class="t-body"><div class="eyebrow">Сесію завершено</div><h2 class="h1" style="text-align:center">'+(acc>=85?'Супер, <span class="hl">так тримати</span>':acc>=60?'Добра <span class="hl">робота</span>':'Головне — <span class="hl">регулярність</span>')+'</h2>'+
+  '<div class="done-nums"><div><b>'+T.n+'</b><span>'+plural(T.n,'картка','картки','карток')+'</span></div><div><b>'+acc+'%</b><span>точність</span></div><div><b>'+fmtDur(T.ms)+'</b><span>часу</span></div></div>'+
+  '<p class="muted" style="text-align:center;margin:0">'+ic('flame',16).replace('class="ic"','class="ic" style="display:inline;vertical-align:-3px"')+' '+stk+' '+plural(stk,'день','дні','днів')+' поспіль'+(left?' · у черзі ще '+left:' · на сьогодні все')+'</p></div>'+
+  '<div class="t-bottom" style="flex-direction:row;justify-content:center;flex-wrap:wrap">'+(left?'<button class="btn btn-gold btn-lg" data-act="again">Ще частина</button>':'')+'<button class="btn '+(left?'btn-line':'btn-gold')+' btn-lg" data-act="exitTrain">Готово</button></div>'}
+function exitTrain(){if(T&&!T.done&&T.n>0)finishSession();T=null;$('#train').hidden=true;$('#train').innerHTML='';document.body.style.overflow='';try{speechSynthesis.cancel()}catch(e){}render()}
+
+/* ---------- lesson: Learn / Match / Fill in / Choose / Speak / Write ---------- */
+let LN=null;
+const LTABS=[['learn','Learn'],['match','Match'],['fill','Fill in'],['choose','Choose'],['speak','Speak'],['write','Write']];
+const SIT0=['A friend cancels your plans at the last minute.','You get an unexpected gift from a colleague.','Your boss praises your work in front of everyone.','You lose your phone on the way to work.','A colleague takes credit for your work.','You finally finish a big project.','Your flight is delayed for five hours.','You meet an old friend in a café.','You can’t decide what to cook for dinner.','A neighbor helps you carry heavy bags.'];
+const lw=()=>LN?LN.ids.map(card).filter(Boolean):[];
+const bare=s=>String(s||'').replace(/…/g,'').trim();
+function scopeLabel(scope){return scope==='today'?'Сьогоднішня черга':scope==='all'?'Усі слова':scope==='hard'?'Важкі слова':scope===''?'Без набору':setName(scope)}
+function startLesson(scope){
+  let base;
+  if(scope==='today'){base=srsOrder(todayQueue());if(base.length<8)base=base.concat(freePool('all',24).filter(c=>!base.includes(c)))}
+  else base=freePool(scope,40);
+  const ws=base.filter(c=>c.en&&c.uk&&c.pos!=='речення').slice(0,16);
+  if(ws.length<4){toast('Для уроку потрібно хоча б 4 слова з перекладом.');return}
+  LN={ids:ws.map(c=>c.id),name:scopeLabel(scope),tab:'learn',start:Date.now(),sort:{},sel:null,
+    match:{round:0,rounds:[],right:[],sel:null,done:{},bad:{},wrong:null},
+    fill:null,choose:null,fillAns:{},fillFirst:{},chooseAns:{},
+    speak:{sits:null,starters:null,example:'',si:0,ti:0},
+    write:{text:'',fb:null,busy:false},gen:'off'};
+  const sh=shuffle(LN.ids.slice()),R=LN.match.rounds;for(let i=0;i<sh.length;i+=6)R.push(sh.slice(i,i+6));
+  if(R.length>1&&R[R.length-1].length<3){const last=R.pop();R[R.length-1]=R[R.length-1].concat(last)}
+  LN.match.right=R.map(ids=>shuffle(ids.slice()));
+  lessonFallback();
+  $('#train').hidden=false;document.body.style.overflow='hidden';renderLesson(true);
+}
+function blankIn(sentence,word){const w=bare(word);if(!w||!sentence)return null;
+  const re=new RegExp('(^|[^A-Za-z’\'])('+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(?=$|[^A-Za-z])','i');const m=sentence.match(re);if(!m)return null;
+  const i=m.index+m[1].length;return sentence.slice(0,i)+'___'+sentence.slice(i+m[2].length)}
+function lessonFallback(){
+  const ws=lw();
+  LN.fill=ws.map(c=>{const s=blankIn(c.ex,c.en);return s?{s,ans:bare(c.en)}:null}).filter(Boolean).slice(0,10);
+  LN.choose=shuffle(ws.slice()).slice(0,10).map(c=>{const o=ws.filter(x=>x.id!==c.id),same=o.filter(x=>x.pos===c.pos),pool=same.length?same:o;const d=pool[Math.floor(Math.random()*pool.length)];return{s:'«'+c.uk+'» англійською — це…',opts:shuffle([bare(c.en),bare(d.en)]),ans:bare(c.en)}});
+  LN.speak.sits=shuffle(SIT0.slice());
+  LN.speak.starters=shuffle(ws.map(c=>'Say a sentence about your week with “'+bare(c.en)+'”…'));
+  const exc=ws.find(c=>c.ex);LN.speak.example=exc?exc.ex:'If I passed an important exam, I would feel proud and relieved.';
+}
+function lessonScore(){const M=LN.match;let ok=LN.ids.filter(id=>M.done[id]&&!M.bad[id]).length,tot=LN.ids.length,ans=Object.keys(M.done).length;
+  if(LN.fill){tot+=LN.fill.length;Object.keys(LN.fillFirst).forEach(k=>{ans++;if(LN.fillFirst[k])ok++})}
+  if(LN.choose){tot+=LN.choose.length;Object.keys(LN.chooseAns).forEach(k=>{ans++;if(LN.chooseAns[k].ok)ok++})}
+  return{ok,tot,ans}}
+function nextBtn(){const i=LTABS.findIndex(t=>t[0]===LN.tab);return '<div class="ln-foot">'+(i<LTABS.length-1?'<button class="btn btn-gold" data-act="lnTab" data-v="'+LTABS[i+1][0]+'">Далі: '+LTABS[i+1][1]+' →</button>':'<button class="btn btn-gold" data-act="lnClose">Завершити урок</button>')+'</div>'}
+function lnHead(t,sub){return '<div class="ln-h"><h2 class="h2">'+t+'</h2>'+(sub?'<p class="muted">'+sub+'</p>':'')+'</div>'}
+function skelRows(n){return '<p class="hint" style="margin:0">Готую вправи…</p>'+Array.from({length:n},()=>'<div class="sk-row"></div>').join('')}
+const LT={};
+LT.learn=function(){
+  const ws=lw(),pool=ws.filter(c=>!LN.sort[c.id]),sorted=ws.length-pool.length;
+  const chip=(c,uk)=>'<button class="ln-chip" draggable="true" data-lchip="'+c.id+'" data-act="lnChip" data-id="'+c.id+'" aria-pressed="'+(LN.sel===c.id)+'">'+esc(c.en)+(uk?' <small>'+esc(c.uk)+'</small>':'')+'</button>';
+  const box=(k,emo,t)=>{const inn=ws.filter(c=>LN.sort[c.id]===k);return '<div class="ln-box lb-'+k+'" data-lbox="'+k+'" data-act="lnBox" role="button" tabindex="0" aria-label="'+t+'"><span aria-hidden="true" style="font-size:22px">'+emo+'</span><b>'+t+' <span class="muted">'+inn.length+'</span></b><div class="in">'+inn.map(c=>chip(c,k!=='know')).join('')+'</div></div>'};
+  return lnHead('1. Розминка: розклади слова','Тапни слово, потім коробку (або перетягни). Відповідай чесно — це лише розминка.')+
+    '<div class="ln-pool" data-lbox="pool" data-act="lnBox">'+(pool.length?pool.map(c=>chip(c)).join(''):'<span class="muted">Усі слова розкладено ✓</span>')+'</div>'+
+    '<div class="ln-boxes">'+box('know','✅','Знаю')+box('learning','🤔','Ще вчу')+box('forgot','🙈','Не памʼятаю')+'</div>'+
+    '<div class="ln-foot" style="justify-content:space-between"><span class="hint" style="align-self:center">У коробках «Ще вчу» і «Не памʼятаю» видно переклад.</span><button class="btn btn-line" data-act="lnReset"'+(sorted?'':' disabled')+'>Почати знову</button></div>'+
+    '<h2 class="h3" style="margin-top:6px">Слова уроку</h2><div class="list ln-voc">'+ws.map(c=>'<div class="wrow"><div class="wrow-main" style="cursor:default"><div class="wtxt"><b>'+esc(c.en)+(c.ipa?' <span class="muted" style="display:inline;font-weight:400;font-size:13px">'+esc(c.ipa)+'</span>':'')+'</b><span>'+esc(c.uk)+'</span>'+(c.ex?'<i>'+esc(c.ex)+'</i>':'')+'</div></div><button class="ibtn" data-act="say" data-t="'+esc(c.en)+'" aria-label="Озвучити '+esc(c.en)+'">'+ic('speaker',18)+'</button></div>').join('')+'</div>'+nextBtn();
+};
+LT.match=function(){
+  const M=LN.match,R=M.rounds.length,ids=M.rounds[M.round],right=M.right[M.round];
+  const btn=(side,c,label)=>{const done=M.done[c.id];let cls='';if(done)cls=' ok';else if(M.wrong&&M.wrong[side]===c.id)cls=' no';else if(M.sel&&M.sel.side===side&&M.sel.id===c.id)cls=' sel';return '<button class="ln-m'+cls+'" data-act="lnM" data-side="'+side+'" data-id="'+c.id+'"'+(done?' disabled':'')+'>'+esc(label)+'</button>'};
+  const allDone=ids.every(id=>M.done[id]||!card(id)),last=M.round>=R-1;
+  const clean=LN.ids.filter(id=>M.done[id]&&!M.bad[id]).length;
+  return lnHead('2. Знайди пари','Тапни англійське слово, потім його переклад.'+(R>1?' Раунд '+(M.round+1)+' з '+R+'.':''))+
+    '<div class="ln-pairs"><div class="ln-col">'+ids.map(card).filter(Boolean).map(c=>btn('l',c,c.en)).join('')+'</div><div class="ln-col">'+right.map(card).filter(Boolean).map(c=>btn('r',c,c.uk)).join('')+'</div></div>'+
+    (allDone&&!last?'<div class="ln-foot"><button class="btn btn-gold" data-act="lnRound">Наступний раунд →</button></div>':
+      (allDone?'<div class="note-box">Усі пари знайдено. Без помилок: <b>'+clean+'</b> з '+LN.ids.length+'.</div>':'')+nextBtn());
+};
+LT.fill=function(){
+  const h=lnHead('3. Встав слово','Обери слово, яке підходить у пропуск.');
+  if(!LN.fill)return h+skelRows(4);
+  if(!LN.fill.length)return h+'<div class="empty"><p>У цих слів немає прикладів, з яких можна зробити пропуски. Додай приклади в картки.</p></div>'+nextBtn();
+  const opts=lw().map(c=>bare(c.en)).sort((a,b)=>a.localeCompare(b));
+  return h+LN.fill.map((f,i)=>{const a=LN.fillAns[i],p=f.s.split('___');
+    const sel='<select class="sel ln-sel'+(a&&a.v?(a.ok?' ok':' no'):'')+'" data-lfill="'+i+'" aria-label="Пропуск '+(i+1)+'"><option value="">обери…</option>'+opts.map(o=>'<option value="'+esc(o)+'"'+(a&&a.v===o?' selected':'')+'>'+esc(o)+'</option>').join('')+'</select>';
+    return '<div class="ln-q"><span class="n">'+(i+1)+'.</span>'+esc(p[0])+sel+esc(p.slice(1).join(' '))+'</div>'}).join('')+nextBtn();
+};
+LT.choose=function(){
+  const h=lnHead('4. Обери правильне','Яке слово завершує речення?');
+  if(!LN.choose)return h+skelRows(4);
+  return h+LN.choose.map((q,i)=>{const a=LN.chooseAns[i];
+    return '<div class="ln-q" style="line-height:1.5;display:flex;flex-direction:column;gap:10px"><div><span class="n">'+(i+1)+'.</span>'+esc(q.s)+'</div><div class="ln-opts">'+q.opts.map(o=>{let cls='';if(a){if(o===q.ans)cls=' ok';else if(a.pick===o)cls=' no'}return '<button class="ln-o'+cls+'" data-act="lnPick" data-i="'+i+'" data-v="'+esc(o)+'"'+(a?' disabled':'')+'>'+esc(o)+'</button>'}).join('')+'</div></div>'}).join('')+nextBtn();
+};
+LT.speak=function(){
+  const sp=LN.speak,h=lnHead('5. Говоріння','Працюй з партнером або говори вголос. Відповідай повними реченнями й пояснюй чому.');
+  if(!sp.sits)return h+skelRows(2);
+  const sit=sp.sits[sp.si%sp.sits.length],st=sp.starters[sp.ti%sp.starters.length];
+  return h+'<h2 class="h3">Ситуації</h2><div class="ln-card"><span>'+esc(sit)+'</span>'+sayBtn(sit)+'</div>'+
+    '<div class="row"><button class="btn btn-gold" data-act="lnSit">Нова ситуація</button></div>'+
+    (sp.example?'<div class="ln-ex">Приклад: “'+esc(sp.example)+'”</div>':'')+
+    '<h2 class="h3" style="margin-top:8px">Закінчи речення</h2><div class="ln-card"><span>'+esc(st)+'</span>'+sayBtn(st.replace(/…$/,''))+'</div>'+
+    '<div class="row"><button class="btn btn-gold" data-act="lnStarter">Новий початок</button></div>'+nextBtn();
+};
+function usedWords(text){const t=norm(text),toks=t.split(' '),pad=' '+t+' ';
+  return lw().filter(c=>{const w=norm(bare(c.en));if(!w)return false;if(w.includes(' '))return pad.includes(' '+w+' ');const b=w.length>4?w.replace(/(e|y)$/,''):w;return toks.some(x=>x===w||(x.startsWith(b)&&x.length-b.length<=4))})}
+function countSent(t){return String(t||'').split(/[.!?]+/).filter(s=>s.trim().split(/\s+/).length>=2).length}
+function writeStats(){const u=usedWords(LN.write.text),ids=new Set(u.map(c=>c.id));
+  return{cnt:'<b class="ln-cnt'+(u.length>=5?' done':'')+'" id="lnCount">Слова з уроку: '+u.length+' / 5</b>',sent:'Речень: '+countSent(LN.write.text),
+    words:lw().map(c=>'<span class="ln-w'+(ids.has(c.id)?' on':'')+'">'+esc(bare(c.en))+'</span>').join('')}}
+function updWrite(){const s=writeStats();const c=$('#lnCount');if(c)c.outerHTML=s.cnt;const n=$('#lnSent');if(n)n.textContent=s.sent;const w=$('#lnWords');if(w)w.innerHTML=s.words;const b=$('[data-act="lnCheck"]');if(b&&!LN.write.busy)b.disabled=!LN.write.text.trim()}
+LT.write=function(){
+  const W_=LN.write,s=writeStats(),fb=W_.fb;
+  return lnHead('6. Письмо','Напиши 6–8 речень про свій день або тиждень. Використай щонайменше 5 слів з уроку.')+
+    '<textarea class="ta" id="lnWrite" placeholder="Yesterday I felt… because…" aria-label="Твій текст">'+esc(W_.text)+'</textarea>'+
+    '<div class="row" style="justify-content:space-between">'+s.cnt+'<span class="muted" id="lnSent">'+s.sent+'</span></div>'+
+    '<div class="ln-words" id="lnWords">'+s.words+'</div>'+
+    '<p class="hint" style="margin:0">Напиши кілька речень з цими словами — чим більше слів використаєш, тим краще.</p>'+
+    (fb?'<div class="card ln-fb"><div class="eyebrow">Відгук</div>'+(fb.praise?'<p>'+esc(fb.praise)+'</p>':'')+(fb.notes.length?'<ul>'+fb.notes.map(n=>'<li>'+esc(n)+'</li>').join('')+'</ul>':'<p>Помилок не знайдено.</p>')+(fb.corrected&&fb.corrected.trim()!==W_.text.trim()?'<div class="eyebrow" style="margin-top:12px">Виправлений текст</div><p>'+esc(fb.corrected)+'</p>':'')+'</div>':'')+
+    nextBtn();
+};
+function renderLesson(top){
+  const el=$('#train');if(!LN)return;const ob=$('.ln-body',el),st=top||!ob?0:ob.scrollTop;const sc=lessonScore();
+  el.innerHTML='<div class="ln"><div class="ln-top"><button class="ibtn" data-act="lnClose" aria-label="Закрити (Esc)">'+ic('x',18)+'</button><div class="ln-title"><b>Урок · '+esc(LN.name)+'</b><span class="muted">Інтерактивна практика · '+LN.ids.length+' '+plural(LN.ids.length,'слово','слова','слів')+'</span></div><span class="ln-score" aria-label="Рахунок">Рахунок '+sc.ok+' / '+sc.tot+'</span></div>'+
+    '<div class="chips ln-tabs" role="tablist">'+LTABS.map(t=>'<button class="chip" role="tab" data-act="lnTab" data-v="'+t[0]+'" aria-pressed="'+(LN.tab===t[0])+'" aria-selected="'+(LN.tab===t[0])+'">'+t[1]+'</button>').join('')+'</div>'+
+    '<div class="ln-body">'+LT[LN.tab]()+'</div></div>';
+  const nb=$('.ln-body',el);if(nb)nb.scrollTop=st;
+  if(top){const t=$('.ln-tabs [aria-pressed="true"]',el);if(t&&t.scrollIntoView)t.scrollIntoView({block:'nearest',inline:'nearest'})}
+}
+function sortTo(id,box){if(!LN||!card(id))return;if(box==='pool')delete LN.sort[id];else LN.sort[id]=box;LN.sel=null;renderLesson()}
+function matchClick(side,id){const M=LN.match;if(M.done[id]||M.wrong)return;
+  if(!M.sel||M.sel.side===side){M.sel=M.sel&&M.sel.id===id&&M.sel.side===side?null:{side,id};if(side==='l'&&M.sel&&S.settings.autoSpeak){const c=card(id);if(c)speak(c.en)}renderLesson();return}
+  const l=side==='l'?id:M.sel.id,r=side==='r'?id:M.sel.id;
+  if(l===r){M.done[l]=true;M.sel=null;renderLesson();return}
+  M.bad[l]=true;M.wrong={l,r};renderLesson();
+  setTimeout(()=>{if(!LN)return;LN.match.wrong=null;LN.match.sel=null;if(LN.tab==='match')renderLesson()},650);
+}
+function fillPick(i,v){if(!LN||!LN.fill||!LN.fill[i])return;if(!v){delete LN.fillAns[i];renderLesson();return}
+  const ok=norm(v)===norm(LN.fill[i].ans);if(!(i in LN.fillFirst))LN.fillFirst[i]=ok;LN.fillAns[i]={v,ok};renderLesson()}
+function choosePick(i,v){if(!LN||!LN.choose||!LN.choose[i]||LN.chooseAns[i])return;const q=LN.choose[i];LN.chooseAns[i]={pick:v,ok:v===q.ans};renderLesson();if(S.settings.autoSpeak)speak(q.ans)}
+function closeLesson(){
+  if(!LN)return;const sc=lessonScore();
+  if(sc.ans){const now=Date.now(),ms=Math.min(now-LN.start,3*HOUR);S.sessions.push({id:uid(),start:LN.start,end:now,ms,n:sc.ans,ok:sc.ok,mode:'lesson',kind:'lesson'});if(S.sessions.length>300)S.sessions=S.sessions.slice(-300);
+    const d=dd();d.tot+=sc.ans;d.ok+=sc.ok;d.ms+=ms;d.sess=(d.sess||0)+1;touch('meta','sessions')}
+  LN=null;$('#train').hidden=true;$('#train').innerHTML='';document.body.style.overflow='';try{speechSynthesis.cancel()}catch(e){}render();
+  if(sc.ans)toast('Урок завершено: '+sc.ok+' / '+sc.tot);
+}
+
+/* ---------- events ---------- */
+const ACT={
+  lnClose:()=>closeLesson(),lnTab:b=>{if(!LN)return;LN.tab=b.dataset.v;LN.sel=null;renderLesson(true)},
+  lnChip:(b,e)=>{e.stopPropagation();if(!LN)return;LN.sel=LN.sel===b.dataset.id?null:b.dataset.id;if(LN.sel&&S.settings.autoSpeak){const c=card(LN.sel);if(c)speak(c.en)}renderLesson()},
+  lnBox:b=>{if(LN&&LN.sel)sortTo(LN.sel,b.dataset.lbox)},
+  lnReset:()=>{if(!LN)return;LN.sort={};LN.sel=null;renderLesson()},
+  lnM:b=>{if(LN)matchClick(b.dataset.side,b.dataset.id)},
+  lnRound:()=>{if(!LN)return;LN.match.round=Math.min(LN.match.rounds.length-1,LN.match.round+1);LN.match.sel=null;renderLesson(true)},
+  lnPick:b=>choosePick(+b.dataset.i,b.dataset.v),
+  lnSit:()=>{if(!LN)return;LN.speak.si++;renderLesson()},lnStarter:()=>{if(!LN)return;LN.speak.ti++;renderLesson()},
+  go:b=>go(b.dataset.v),add:()=>openAdd(),settings:()=>openSettings(),closeSheet:()=>closeSheet(),
+  more:()=>openSheet(sheetHead('Ще')+'<div class="list more-list">'+[['sets','Набори','folder'],['progress','Прогрес','chart'],['history','Історія','clock']].map(x=>'<button class="wrow-main" data-act="goSheet" data-v="'+x[0]+'">'+ic(x[2])+'<b>'+x[1]+'</b></button>').join('')+'<button class="wrow-main" data-act="settings">'+ic('gear')+'<b>Налаштування та дані</b></button></div>','more'),
+  goSheet:b=>{closeSheet();go(b.dataset.v)},
+  say:(b,e)=>{e.stopPropagation();speak(b.dataset.t)},
+  start:b=>startSession(b.dataset.mode,b.dataset.scope),
+  dir:b=>{S.settings.dir=b.dataset.v;touch('meta');const sc=($('#scope')||{}).value;render();if(sc&&$('#scope'))$('#scope').value=sc},
+  wst:b=>{W.st=b.dataset.v;render()},
+  edit:b=>openEdit(b.dataset.id),saveCard:b=>saveCard(b.dataset.id),delCard:b=>delCard(b.dataset.id),
+  setNew:()=>openSetForm(),share:b=>shareSet(b.dataset.id),follow:b=>followSet(b.dataset.id),unfollow:b=>unfollowSet(b.dataset.id),unfollowYes:b=>unfollowSet(b.dataset.id,true),
+  libOpen:b=>openLibSet(b.dataset.id),libDelSet:b=>libDeleteSet(b.dataset.id),libDelSetYes:b=>libDeleteSet(b.dataset.id,true),libCard:b=>openLibCard(b.dataset.id),libBack:()=>{sheetKind='lib';renderLibSheet()},
+  libCardSave:b=>libCardSave(b.dataset.id),libCardDel:b=>libCardDel(b.dataset.id),delCardAll:b=>delCard(b.dataset.id,true),setEdit:b=>openSetForm(b.dataset.id),setSave:b=>setSave(b.dataset.id),setDel:b=>setDel(b.dataset.id),setDelYes:b=>setDel(b.dataset.id,true),
+  setView:b=>{W.set=b.dataset.id;W.st='all';W.q='';go('words')},
+  htab:b=>{H.tab=b.dataset.v;render()},
+  parse:()=>doParse(),addBack:()=>{A.step='input';A.busy=false;renderAdd()},addSave:()=>doSave(),
+  rvDel:b=>{const i=+b.dataset.i;A.items[i].removed=!A.items[i].removed;rvRefreshOne(i)},
+  dupAct:b=>{const i=+b.dataset.i;A.items[i].dupAct=b.dataset.v;rvRefreshOne(i)},
+  saveSettings:()=>saveSettings(),exp:b=>exportData(b.dataset.v),reset:()=>resetAll(),resetYes:()=>resetAll(true),impYes:()=>applyImport(),
+  copyExp:()=>{const t=$('#expTa');if(!t)return;const done=()=>toast('Скопійовано');try{navigator.clipboard.writeText(t.value).then(done,()=>{t.select();toast('Виділив текст — натисни Ctrl+C / Cmd+C')})}catch(e){t.select();toast('Виділив текст — натисни Ctrl+C / Cmd+C')}},
+  flipCard:()=>{if(!T)return;if(!T.revealed)reveal();else{const f=$('#flip');if(f)f.classList.toggle('on')}},
+  check:()=>checkType(),pick:b=>pickOpt(+b.dataset.k),grade:b=>grade(+b.dataset.g),
+  exitTrain:()=>exitTrain(),again:()=>{const m=T?T.mode:'mixed';T=null;startSession(m,'today')}
+};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b||b.disabled)return;const f=ACT[b.dataset.act];if(f){f(b,e)}});
+document.addEventListener('input',e=>{const t=e.target;
+  if(t.id==='lnWrite'&&LN){LN.write.text=t.value;updWrite()}
+  else if(t.id==='wq'){W.q=t.value;$('#wlist').innerHTML=wordRows()}
+  else if(t.id==='hq'){H.q=t.value;$('#hlist').innerHTML=histWords()}
+  else if(t.id==='addTa'&&A){A.text=t.value}
+  else if(t.id==='addNewSet'&&A){A.newSet=t.value}
+  else if(t.id==='s_rate'){$('#rateV').textContent=t.value}
+  else if(t.dataset&&t.dataset.f&&A){const i=+t.dataset.i;A.items[i][t.dataset.f]=t.value;if(t.dataset.f==='uk'||t.dataset.f==='en')rvFoot();if(t.dataset.f==='uk')t.classList.toggle('need',!t.value.trim())}
+});
+document.addEventListener('change',e=>{const t=e.target;
+  if(LN&&t.dataset&&t.dataset.lfill!=null){fillPick(+t.dataset.lfill,t.value)}
+  else if(t.id==='wset'){W.set=t.value;render()}
+  else if(t.id==='addShared'&&A){A.shared=t.checked}
+  else if(t.id==='addSet'&&A){A.text=($('#addTa')||{}).value||A.text;A.set=t.value;renderAdd()}
+  else if(t.id==='addFile'&&t.files&&t.files[0]){const r=new FileReader();r.onload=()=>{A.text=String(r.result||'').replace(/^﻿/,'');renderAdd()};r.onerror=()=>toast('Не вдалося прочитати файл.');r.readAsText(t.files[0])}
+  else if(t.id==='impFile'&&t.files&&t.files[0]){handleImport(t.files[0])}
+  else if(t.dataset&&t.dataset.f==='en'&&A){markDups();rvRefreshOne(+t.dataset.i)}
+});
+document.addEventListener('keydown',e=>{
+  const tg=e.target,inField=/^(INPUT|TEXTAREA|SELECT)$/.test(tg.tagName);
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  if(LN){if(e.key==='Escape'){e.preventDefault();closeLesson()}else if(!inField&&(e.key==='Enter'||e.key===' ')&&tg.dataset&&tg.dataset.act==='lnBox'){e.preventDefault();tg.click()}return}
+  if(T){
+    if(e.key==='Escape'){e.preventDefault();exitTrain();return}
+    if(T.done){if(e.key==='Enter'){e.preventDefault();const q=todayQueue();if(q.learn.length+q.revAvail+q.newCards.length)ACT.again();else exitTrain()}return}
+    if(tg.id==='typeIn'&&!T.revealed){if(e.key==='Enter'){e.preventDefault();checkType()}return}
+    if(inField&&tg.id!=='typeIn')return;
+    if(e.code==='Space'){e.preventDefault();if(md()==='flip')ACT.flipCard();return}
+    if(/^[1-4]$/.test(e.key)){e.preventDefault();const n=+e.key;if(T.revealed){const g2=keyGrade(n);if(g2)grade(g2)}else if(isChoice())pickOpt(n-1);return}
+    if(e.key==='Enter'){e.preventDefault();if(T.revealed)grade(keyGrade(T.sugg)||T.sugg);else if(md()==='flip')reveal();return}
+    if(e.code==='KeyP'){e.preventDefault();const c=cur();if(c)speak(c.en);return}
+    return;
+  }
+  if(sheetOpen){
+    if(e.key==='Escape'){e.preventDefault();closeSheet();return}
+    if(tg.id==='addTa'&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();doParse();return}
+    if(A&&A.step==='review'&&tg.dataset&&tg.dataset.f&&e.key==='Enter'){e.preventDefault();const ins=$$('.rv input');const k=ins.indexOf(tg);if(k>=0&&ins[k+1])ins[k+1].focus();else doSave();return}
+    if(tg.id==='setName'&&e.key==='Enter'){e.preventDefault();const b=$('[data-act="setSave"]');if(b)setSave(b.dataset.id);return}
+    return;
+  }
+  if(inField)return;
+  if(e.code==='KeyN'){e.preventDefault();openAdd();return}
+  if(/^[1-6]$/.test(e.key)){e.preventDefault();go(NAV[+e.key-1][0])}
+});
+/* lesson drag & drop */
+document.addEventListener('dragstart',e=>{const c=e.target.closest&&e.target.closest('[data-lchip]');if(c&&LN){e.dataTransfer.setData('text/plain',c.dataset.lchip);e.dataTransfer.effectAllowed='move'}});
+document.addEventListener('dragover',e=>{const b=LN&&e.target.closest&&e.target.closest('[data-lbox]');if(b){e.preventDefault();e.dataTransfer.dropEffect='move';b.classList.add('over')}});
+document.addEventListener('dragleave',e=>{const b=e.target.closest&&e.target.closest('[data-lbox]');if(b&&!b.contains(e.relatedTarget))b.classList.remove('over')});
+document.addEventListener('drop',e=>{const b=LN&&e.target.closest&&e.target.closest('[data-lbox]');if(!b)return;e.preventDefault();const id=e.dataTransfer.getData('text/plain');if(id)sortTo(id,b.dataset.lbox)});
+document.addEventListener('keydown',e=>{if(e.target&&e.target.id==='flip'&&(e.key==='Enter')&&T&&!T.revealed){e.preventDefault()}},true);
+
+/* ---------- boot ---------- */
+render();renderStore();lsSave();
+initSheet();
+setInterval(()=>{if(!T&&!sheetOpen&&view==='today'&&document.visibilityState==='visible')renderNav()},60000);
+})();
+</script>
+
+</body></html>
